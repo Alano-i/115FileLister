@@ -2,10 +2,7 @@ import * as React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Layout from "/@/layout";
 import { ConfigProvider, Result, Spin, message } from "antd";
-import Home from "/@/views/dashboard";
-import Login from "/@/views/login";
 import { createContext } from "react";
-import useStores from "/@/hooks/useStores";
 import { Router } from "./router";
 import zhCN from "antd/lib/locale/zh_CN";
 import { MessageInstance } from "antd/es/message/interface";
@@ -13,12 +10,10 @@ import { MessageInstance } from "antd/es/message/interface";
 export const MessageContext = createContext<MessageInstance | null>(null);
 
 const Config = () => {
-  const { auth } = useStores();
-
   const [messageApi, contextHolder] = message.useMessage();
 
   return (
-    <ConfigProvider locale={zhCN} theme={auth.theme}>
+    <ConfigProvider locale={zhCN}>
       <MessageContext.Provider value={messageApi}>
         {contextHolder}
         <Outlet />
@@ -32,9 +27,7 @@ const BasicRoutes = () => {
     <React.Suspense fallback={<Spin />}>
       <Routes>
         <Route element={<Config />}>
-          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
             {Router?.map(({ element, path }) => (
               <Route key={path} path={path} element={element} />
             ))}
