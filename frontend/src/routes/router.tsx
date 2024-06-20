@@ -1,8 +1,5 @@
 import React from "react";
-import Logs from "/@/views/logs";
-import Arrange from "/@/views/arrange";
-import Subscribe from "/@/views/subscribe";
-import Settings from "/@/views/settings";
+import Index from "/@/views/index";
 
 //角色
 type Role = "admin" | "user";
@@ -16,23 +13,7 @@ interface T {
 
 export const Router: Array<T> = [
   {
-    path: "/logs",
-    element: <Logs />,
-    role: "admin",
-  },
-  {
-    path: "/arrange",
-    element: <Arrange />,
-    role: "admin",
-  },
-  {
-    path: "/subscribe",
-    element: <Subscribe />,
-    role: "admin",
-  },
-  {
-    path: "/settings",
-    element: <Settings />,
-    role: "admin",
+    path: "/",
+    element: <Index />,
   },
 ];

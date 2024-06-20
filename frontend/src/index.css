@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
@@ -15,12 +14,9 @@ body,
   height: 100vh;
 }
 
-html[theme='dark'] {
+html {
   background: #171717;
-}
-
-html[theme='light'] {
-  background: #ffffff;
+  color: #fff;
 }
 
 /* 设置滚动条的样式 */
@@ -58,13 +54,5 @@ html[theme='light'] {
 
 :root {
   --safe-area-inset-top: env(safe-area-inset-top);
-  --safe-area-inset-bottom: env(safe-area-inset-bottom)
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
 }
-
-
-/*
-.no-scroll {
-  overflow: hidden;
-  touch-action: none;
-}
-*/
