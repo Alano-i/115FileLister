@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+html[theme='dark'] {
+  background: #171717;
+}
+
+html[theme='light'] {
+  background: #ffffff;
+}
+
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #171717;
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  /*-webkit-box-shadow: rgba(255, 0, 0, 1);*/
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0);
+}
+
+/* 滚动条滑块-窗口激活 */
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  /*-webkit-box-shadow:  rgba(255, 0, 0, 0);*/
+}
+
+/* 滚动条滑块-窗口失去焦点 */
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom)
+}
+
+
+/*
+.no-scroll {
+  overflow: hidden;
+  touch-action: none;
+}
+*/

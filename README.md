@@ -8,3 +8,25 @@
 - 文件重命名：根据您的命名规范自动重命名文件。
 - 文件系统监控：实时监控文件系统，发生文件变动时，执行相应功能
 - 共享工具：无缝共享文件和文件夹。
+
+---
+
+# 115 File Lister
+
+## 后端安装依赖
+
+### macOS
+打开终端，输入 `make postinstall` 即可启动后端。
+
+### Windows
+打开终端，输入 `make postinstall2` 即可启动后端。
+
+## 启动
+### macOS
+打开终端，输入 `make dev-backend` 即可启动后端。
+
+### Windows
+打开终端，输入 `make dev-backend2` 即可启动后端。
+
+## 访问
+浏览器访问 `http://localhost:9115/docs` 查看 API 文档。
