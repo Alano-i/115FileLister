@@ -133,7 +133,7 @@ url_cache: MutableMapping[tuple[str, str], P115Url] = TTLCache(64, ttl=0.3)
 app = Application()
 # logger = getattr(app, "logger")
 docs = OpenAPIHandler(info=Info(
-    title="115 filelist web api docs", 
+    title="115 Filelist WEB API Docs", 
     version=__version_str__, 
 ))
 docs.ui_providers.append(ReDocUIProvider())
