@@ -15,14 +15,14 @@ body,
 }
 
 html {
-  background: #171717;
+  background: #131313;
   color: #fff;
 }
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
   width: 8px;
-  background: #171717;
+  background: #131313;
 }
 
 /* 滚动槽 */
