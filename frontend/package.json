@@ -49,5 +49,8 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
+  },
+  "volta": {
+    "node": "20.14.0"
   }
 }
