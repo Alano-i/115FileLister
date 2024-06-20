@@ -1,5 +1,36 @@
 import { defHttp } from "/@/http";
 
+export interface Ancestor {
+  id: number;
+  parent_id: number;
+  name: string;
+  is_directory: boolean;
+}
+
+export interface FileInfo {
+  id: number;
+  parent_id: number;
+  name: string;
+  path: string;
+  pickcode: string;
+  is_directory: boolean;
+  sha1: string | null;
+  size: number | null;
+  ico: string;
+  ctime: number;
+  mtime: number;
+  atime: number;
+  thumb: string;
+  star: boolean;
+  labels: any[];
+  score: number;
+  hidden: boolean;
+  described: boolean;
+  ancestors: Ancestor[];
+}
+
+export type FileListResponse = FileInfo[];
+
 /**
  * 获取文件或目录的属性
  * @param params.pickcode - 文件或目录的 pickcode，优先级高于 id
@@ -13,7 +44,7 @@ export const getFileAttr = (params: {
   path?: string;
 }) =>
   defHttp.get({
-    url: `/api/attr`,
+    url: `/attr`,
     params,
   });
 
@@ -29,8 +60,8 @@ export const getList = (params: {
   id?: number;
   path?: string;
 }) =>
-  defHttp.get({
-    url: `/api/list`,
+  defHttp.get<FileListResponse>({
+    url: `/list`,
     params,
   });
 
@@ -46,8 +77,8 @@ export const getAncestors = (params: {
   id?: number;
   path?: string;
 }) =>
-  defHttp.get({
-    url: `/api/ancestors`,
+  defHttp.get<Ancestor[]>({
+    url: `/ancestors`,
     params,
   });
 
@@ -64,7 +95,7 @@ export const getDesc = (params: {
   path?: string;
 }) =>
   defHttp.get({
-    url: `/api/desc`,
+    url: `/desc`,
     params,
   });
 
@@ -83,7 +114,7 @@ export const getUrl = (params: {
   web?: boolean;
 }) =>
   defHttp.get({
-    url: `/api/url`,
+    url: `/url`,
     params,
   });
 
@@ -102,7 +133,7 @@ export const fileDownload = (params: {
   web?: boolean;
 }) =>
   defHttp.get({
-    url: `/api/download`,
+    url: `/download`,
     params,
   });
 
@@ -121,6 +152,6 @@ export const fileM3u8 = (params: {
   definition: number;
 }) =>
   defHttp.get({
-    url: `/api/m3u8`,
+    url: `/m3u8`,
     params,
   });
