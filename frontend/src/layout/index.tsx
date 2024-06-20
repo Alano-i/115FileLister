@@ -7,7 +7,7 @@ import zhCN from "antd/lib/locale/zh_CN";
 const BasicLayout: React.FC = () => {
   return (
     <ConfigProvider locale={zhCN}>
-      <div className="mx-auto my-20 container">
+      <div className="mx-auto py-20 container">
         <Header />
         <Outlet />
       </div>
