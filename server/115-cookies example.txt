@@ -1,0 +1,2 @@
+复制一份115-cookies example.txt，并将cookie填在里面，格式为 cid uid seid
+填好后, 重命名为 115-cookies.txt
