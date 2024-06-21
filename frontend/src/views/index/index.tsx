@@ -5,15 +5,18 @@ import { useSearchParams } from "react-router-dom";
 // 定义文件类型与图标的对应关系
 const fileIconMap: { [key: string]: string[] } = {
   image: ["jpg", "jpeg", "png", "gif"],
-  // pdf: ["pdf"],
-  // word: ["doc", "docx"],
-  // excel: ["xls", "xlsx"],
-  // powerpoint: ["ppt", "pptx"],
-  text: ["txt", "nfo", "srt", "yaml", "yml"],
-  code: ["js", "ts", "json", "html", "css", "scss", "py", "less", "md", "xml", "yaml", "yml"],
-  // audio: ["mp3", "wav"],
+  pdf: ["pdf"],
+  word: ["doc", "docx"],
+  excel: ["xls", "xlsx"],
+  powerpoint: ["ppt", "pptx"],
+  text: ["txt", "ass", "srt"],
+  code: ["js", "ts", "json", "html", "css", "scss", "py", "less", "md", "xml"],
+  audio: ["mp3", "flac", "wav"],
   video: ["mkv", "mp4", "avi"],
-  // archive: ["zip", "rar", "7z"]
+  configuration: ["ini", "yaml", "yml"],
+  db: ["db"],
+  nfo: ["nfo"],
+  archive: ["zip", "rar", "tar", "7z"],
 };
 
 // 定义图标路径
@@ -22,13 +25,16 @@ const iconPathMap: { [key: string]: string } = {
   pdf: "/img/pdf.svg",
   word: "/img/word.svg",
   excel: "/img/excel.svg",
-  powerpoint: "/img/powerpoint.svg",
+  powerpoint: "/img/ppt.svg",
   text: "/img/text.svg",
   audio: "/img/audio.svg",
   video: "/img/video.svg",
   archive: "/img/archive.svg",
   code: "/img/code.svg",
-  default: "/img/none.svg", // 默认图标路径
+  db: "/img/db.svg",
+  nfo: "/img/nfo.svg",
+  configuration: "/img/config.svg",
+  default: "/img/default.svg", // 默认图标路径
 };
 
 /**
@@ -57,7 +63,7 @@ const FileItem = ({
 }) => {
   return (
     <div
-      className="flex items-center mb-[2px]  px-0 hover:px-[14px] py-[16px] rounded-[8px] cursor-pointer text-[14px]  hover:text-[15px] text-[#FFFFFFCC] hover:text-[#ffffffee] hover:bg-[#FFFFFF0D] transition-all duration-300"
+      className="flex items-center mb-[2px]  px-0 hover:px-[14px] py-[16px] rounded-[8px] cursor-pointer text-[14px]  hover:text-[15px] text-[#FFFFFFCC] hover:text-[#ffffffee] hover:bg-[#FFFFFF0D] transition-all duration-300 ease-in-out"
       onClick={onClick}
     >
       {file.is_directory ? (
@@ -109,7 +115,7 @@ const Index = () => {
           className="mr-[6px] w-[16px] h-[16px] opacity-25"
           alt="back"
         />
-        <span className="pr-[4px] hover:text-[#ffffffee] cursor-pointer  transition-all duration-300">
+        <span className="pr-[4px] hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out whitespace-nowrap">
           首页
         </span>
         <div>
@@ -118,7 +124,7 @@ const Index = () => {
               <>
                 <span
                   key={item.id}
-                  className="hover:text-[#ffffffee] cursor-pointer  transition-all duration-300"
+                  className="hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out"
                   onClick={() => {
                     const parentPath = ancestors
                       .slice(0, index + 1)
@@ -134,12 +140,19 @@ const Index = () => {
             );
           })}
         </div>
+        <div className="group flex items-center justify-center rounded-[4px] ml-[12px] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
+          <img
+            src="/img/copy.svg"
+            className="w-[28px] h-[28px] opacity-100 transition-all duration-300 ease-in-out group-hover:filter group-hover:brightness-0"
+            alt="复制路径"
+          />
+        </div>
       </div>
 
       {/* 返回上级目录 */}
       {path !== "/" && (
         <div
-          className="mb-[0px] text-[14px] text-[#FFFFFFCC] hover:text-[15px] hover:text-[#ffffffee] hover:px-[14px] py-[12px] rounded-[8px] cursor-pointer hover:bg-[#ffffff0d] transition-all duration-300"
+          className="mb-[0px] text-[14px] text-[#FFFFFFCC] hover:text-[15px] hover:text-[#ffffffee] hover:px-[14px] py-[12px] rounded-[8px] cursor-pointer hover:bg-[#ffffff0d] transition-all duration-300 ease-in-out"
           onClick={async () => {
             const parentPath = ancestors
               .slice(0, -1)
@@ -150,7 +163,9 @@ const Index = () => {
         >
           <div className="flex items-center">
             <img
-              src="/img/back.svg" className="mr-[6px] w-[9px] opacity-25" alt="back"
+              src="/img/back.svg"
+              className="mr-[6px] w-[9px] opacity-25"
+              alt="back"
             />
             返回上级目录
           </div>
