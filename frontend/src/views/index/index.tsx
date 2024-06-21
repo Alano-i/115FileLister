@@ -1,110 +1,73 @@
-import { useEffect, useState } from "react";
-import { FileInfo, getList, getAncestors, Ancestor } from "/@/api";
+import { Ancestor, FileInfo, getList } from "/@/api";
 import { useSearchParams } from "react-router-dom";
-
-// 定义文件类型与图标的对应关系
-const fileIconMap: { [key: string]: string[] } = {
-  image: ["jpg", "jpeg", "png", "gif"],
-  pdf: ["pdf"],
-  word: ["doc", "docx"],
-  excel: ["xls", "xlsx"],
-  powerpoint: ["ppt", "pptx"],
-  text: ["txt", "ass", "srt"],
-  code: ["js", "ts", "json", "html", "css", "scss", "py", "less", "md", "xml"],
-  audio: ["mp3", "flac", "wav"],
-  video: ["mkv", "mp4", "avi"],
-  configuration: ["ini", "yaml", "yml"],
-  db: ["db"],
-  nfo: ["nfo"],
-  archive: ["zip", "rar", "tar", "7z"],
-};
-
-// 定义图标路径
-const iconPathMap: { [key: string]: string } = {
-  image: "/img/image.svg",
-  pdf: "/img/pdf.svg",
-  word: "/img/word.svg",
-  excel: "/img/excel.svg",
-  powerpoint: "/img/ppt.svg",
-  text: "/img/text.svg",
-  audio: "/img/audio.svg",
-  video: "/img/video.svg",
-  archive: "/img/archive.svg",
-  code: "/img/code.svg",
-  db: "/img/db.svg",
-  nfo: "/img/nfo.svg",
-  configuration: "/img/config.svg",
-  default: "/img/default.svg", // 默认图标路径
-};
-
-/**
- * 根据文件后缀名返回图标路径
- * @param fileName - 文件名
- * @returns 图标路径
- */
-function getFileIcon(fileName: string): string {
-  const fileExtension = fileName.split(".").pop()?.toLowerCase() || "";
-
-  for (const [iconType, extensions] of Object.entries(fileIconMap)) {
-    if (extensions.includes(fileExtension)) {
-      return iconPathMap[iconType];
-    }
-  }
-
-  return iconPathMap["default"];
-}
-
-const FileItem = ({
-  file,
-  onClick,
-}: {
-  file: FileInfo;
-  onClick: () => void;
-}) => {
-  return (
-    <div
-      className="flex items-center mb-[2px]  px-0 hover:px-[14px] py-[16px] rounded-[8px] cursor-pointer text-[14px]  hover:text-[15px] text-[#FFFFFFCC] hover:text-[#ffffffee] hover:bg-[#FFFFFF0D] transition-all duration-300 ease-in-out"
-      onClick={onClick}
-    >
-      {file.is_directory ? (
-        <img
-          src="/img/folder.svg"
-          className="mr-2 w-[32px] h-[32px]"
-          alt="folder"
-        />
-      ) : (
-        <img
-          src={getFileIcon(file.name)}
-          className="mr-2 w-[32px] h-[32px]"
-          alt="file"
-        />
-      )}
-      {file.name}
-    </div>
-  );
-};
+import FileItem from "./components/FileItem";
+import useSWR from "swr";
+import { Fragment, useEffect, useState } from "react";
+import { message } from "antd";
 
 const Index = () => {
-  const [fileList, setFileList] = useState<FileInfo[]>([]);
   let [searchParams, setSearchParams] = useSearchParams();
-  let [ancestors, setAncestors] = useState<Ancestor[]>([]);
 
   const path = searchParams.get("path") || "/";
 
-  const getFileList = async () => {
-    const res = await getList({ path: path });
-    setFileList(res);
-  };
+  const {
+    data: fileList,
+    error: fileListError,
+    isLoading: isFileListLoading,
+  } = useSWR<FileInfo[]>(["/list", path], ([_url, path]: any) =>
+    getList({ path })
+  );
 
-  const _getAncestors = async () => {
-    const res = await getAncestors({ path: path });
-    setAncestors(res);
-  };
+  const [ancestors, setAncestors] = useState<Ancestor[]>([]);
 
   useEffect(() => {
-    _getAncestors();
-    getFileList();
-  }, [path]);
+    if (fileList) {
+      setAncestors(fileList[0]?.ancestors.slice(0, -1) || []);
+    }
+  }, [fileList]);
+
+  const navTo = (file: Pick<FileInfo, "path" | "ancestors">) => {
+    setSearchParams({ path: file.path });
+    setAncestors(file.ancestors);
+  };
+
+  const renderFileList = () => {
+    if (isFileListLoading) {
+      return <div>加载中...</div>;
+    }
+
+    if (fileListError) {
+      return <div>错误: {fileListError.message}</div>;
+    }
+
+    return (
+      <table className="table-auto w-full" rules="none">
+        <thead>
+          <tr>
+            <th className="text-left text-sm pb-2 w-full">名称</th>
+            <th className="text-center text-sm pb-2 whitespace-nowrap">大小</th>
+            <th className="text-center text-sm pb-2">修改日期</th>
+            <th className="text-right text-sm pb-2 pr-3 ">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fileList?.map((file) => {
+            return (
+              <FileItem
+                key={file.id}
+                file={file}
+                onClick={() => {
+                  if (file.is_directory) {
+                    navTo(file);
+                  }
+                }}
+              />
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <div>
@@ -115,36 +78,50 @@ const Index = () => {
           className="mr-[6px] w-[16px] h-[16px] opacity-25"
           alt="back"
         />
-        <span className="pr-[4px] hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out whitespace-nowrap">
+        <span
+          className="pr-[4px] hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out whitespace-nowrap"
+          onClick={() => {
+            navTo({ path: "/", ancestors: [] });
+          }}
+        >
           首页
         </span>
         <div>
           {ancestors.map((item, index) => {
             return (
-              <>
+              <Fragment key={item.id}>
                 <span
-                  key={item.id}
                   className="hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out"
                   onClick={() => {
-                    const parentPath = ancestors
-                      .slice(0, index + 1)
-                      .map((item) => item.name)
-                      .join("/");
-                    setSearchParams({ path: parentPath });
+                    const newAncestors = ancestors.slice(0, index + 1);
+                    navTo({
+                      path: newAncestors.map((item) => item.name).join("/"),
+                      ancestors: newAncestors,
+                    });
                   }}
                 >
                   {item.name}
                 </span>
                 {index !== ancestors.length - 1 && " / "}
-              </>
+              </Fragment>
             );
           })}
         </div>
         <div className="group flex items-center justify-center rounded-[4px] ml-[12px] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
           <img
             src="/img/copy.svg"
-            className="w-[28px] h-[28px] opacity-100 transition-all duration-300 ease-in-out group-hover:filter group-hover:brightness-0"
+            className="cursor-pointer w-[28px] h-[28px] opacity-100 transition-all duration-300 ease-in-out group-hover:filter group-hover:brightness-0"
             alt="复制路径"
+            onClick={() => {
+              navigator.clipboard.writeText(path).then(
+                () => {
+                  message.success("已复制路径");
+                },
+                () => {
+                  message.error("复制路径失败，请手动复制");
+                }
+              );
+            }}
           />
         </div>
       </div>
@@ -173,21 +150,7 @@ const Index = () => {
       )}
 
       {/* 文件列表 */}
-      {fileList.map((file) => {
-        return (
-          <FileItem
-            key={file.id}
-            file={file}
-            onClick={() => {
-              if (file.is_directory) {
-                setSearchParams({ path: file.path });
-                return;
-              }
-              alert("假装下载文件：" + file.name);
-            }}
-          />
-        );
-      })}
+      {renderFileList()}
     </div>
   );
 };

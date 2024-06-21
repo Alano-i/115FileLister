@@ -16,6 +16,7 @@ export interface FileInfo {
   is_directory: boolean;
   sha1: string | null;
   size: number | null;
+  format_size: string;
   ico: string;
   ctime: number;
   mtime: number;
