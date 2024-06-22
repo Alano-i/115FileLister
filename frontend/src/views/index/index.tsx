@@ -33,7 +33,31 @@ const Index = () => {
 
   const renderFileList = () => {
     if (isFileListLoading) {
-      return <div>加载中...</div>;
+      return (
+        <div className="flex items-center text-[14px] text-[#ffffffa8] py-[12px]">
+          <svg
+            className="animate-spin h-[22px] w-[22px] mr-[6px]  text-[#ffffff]"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            ></circle>
+            <path
+              className="opacity-60"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            ></path>
+          </svg>
+          <span className="leading-none">加载中...</span>
+        </div>
+      );
     }
 
     if (fileListError) {
@@ -43,11 +67,11 @@ const Index = () => {
     return (
       <table className="table-auto w-full" rules="none">
         <thead>
-          <tr className="text-[13px]   text-[#ffffff4f]">
+          <tr className="text-[13px] text-[#ffffff4f]">
             <th className="text-left py-[4px] w-full">名称</th>
             <th className="text-center py-[4px] whitespace-nowrap">大小</th>
-            <th className="text-center  py-[4px]">修改日期</th>
-            <th className="text-right  py-[4px] pr-[14px]">操作</th>
+            <th className="text-center py-[4px] whitespace-nowrap">修改日期</th>
+            <th className="text-right py-[4px] pr-[14px]">操作</th>
           </tr>
         </thead>
         <tbody>
