@@ -43,11 +43,11 @@ const Index = () => {
     return (
       <table className="table-auto w-full" rules="none">
         <thead>
-          <tr>
-            <th className="text-left text-sm pb-2 w-full">名称</th>
-            <th className="text-center text-sm pb-2 whitespace-nowrap">大小</th>
-            <th className="text-center text-sm pb-2">修改日期</th>
-            <th className="text-right text-sm pb-2 pr-3 ">操作</th>
+          <tr className="text-[13px]   text-[#ffffff4f]">
+            <th className="text-left py-[4px] w-full">名称</th>
+            <th className="text-center py-[4px] whitespace-nowrap">大小</th>
+            <th className="text-center  py-[4px]">修改日期</th>
+            <th className="text-right  py-[4px] pr-[14px]">操作</th>
           </tr>
         </thead>
         <tbody>
