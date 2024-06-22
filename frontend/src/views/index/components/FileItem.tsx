@@ -15,6 +15,7 @@ const fileIconMap: { [key: string]: string[] } = {
   configuration: ["ini", "yaml", "yml"],
   db: ["db"],
   nfo: ["nfo"],
+  ebook: ["epub", "mobi", "azw3", "kfx", "azw"],
   archive: ["zip", "rar", "tar", "7z"],
 };
 
@@ -32,6 +33,7 @@ const iconPathMap: { [key: string]: string } = {
   code: "/img/code.svg",
   db: "/img/db.svg",
   nfo: "/img/nfo.svg",
+  ebook: "/img/ebook.svg",
   configuration: "/img/config.svg",
   default: "/img/default.svg", // 默认图标路径
 };
