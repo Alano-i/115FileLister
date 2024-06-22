@@ -51,7 +51,7 @@ class RequestData(BaseModel):
     touser: str = '@all'
     bark_url: str = ''
     bark_sound: str = 'chime'
-    bark_group: str = 'PodSuite'
+    bark_group: str = '115Master'
     bark_icon: str = ''  # icon
     tg_base_url: str = 'https://api.telegram.org/bot'
     tgbot_token: str = ''
