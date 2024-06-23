@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { FileInfo } from "/@/api";
 import PlayIcon from "/@/assets/icon/play.svg?react";
 import MoreIcon from "/@/assets/icon/more.svg?react";
-import { Dropdown, MenuProps } from "antd";
+import { Dropdown, MenuProps} from "antd";
 import {
   InfoCircleOutlined,
   FileTextOutlined,
@@ -86,9 +86,17 @@ const FileItem = ({
 
   const items: MenuProps["items"] = [
     {
+      key: "download",
+      label: "下载",
+      icon: <DownloadOutlined style={{ fontSize: "16px"}}/>,
+      onClick: () => {
+        window.open(file?.short_url);
+      },
+    },
+    {
       key: "desc",
       label: "备注",
-      icon: <InfoCircleOutlined />,
+      icon: <InfoCircleOutlined style={{ fontSize: "16px" }}/>,
       onClick: () => {
         window.open(file.short_url?.replace("/download", "/desc"));
       },
@@ -96,29 +104,22 @@ const FileItem = ({
     {
       key: "attr",
       label: "属性",
-      icon: <FileTextOutlined />,
+      icon: <FileTextOutlined style={{ fontSize: "16px" }}/>,
       onClick: () => {
         window.open(file.short_url?.replace("/download", "/attr"));
       },
     },
-    fileType === "video"
+    fileType === "video" || fileType === "audio"
       ? {
           key: "video",
           label: "M3U8",
-          icon: <LinkOutlined />,
+          icon: <LinkOutlined style={{ fontSize: "16px" }}/>,
           onClick: () => {
             window.open(file.short_url?.replace("/download", "/m3u8"));
           },
         }
       : null,
-    {
-      key: "download",
-      label: "下载",
-      icon: <DownloadOutlined />,
-      onClick: () => {
-        window.open(file?.short_url);
-      },
-    },
+
   ].filter(Boolean);
 
   return (
@@ -163,7 +164,7 @@ const FileItem = ({
             className=" cursor-pointer rounded-[6px] bg-[#FFFFFF0D] hover:bg-[#ffffff] transition-all duration-300 ease-in-out"
             onClick={(e) => e.stopPropagation()}
           >
-            <Dropdown menu={{ items }} trigger={["click"]}>
+            <Dropdown  menu={{ items }} trigger={["click"]}>
               <div className="text-[14px] leading-[14px] flex items-center px-[12px] py-[10px] hover:text-[#000000] transition-all duration-300 ease-in-out">
                 <MoreIcon className="w-[16px] h-[16px]" />
               </div>

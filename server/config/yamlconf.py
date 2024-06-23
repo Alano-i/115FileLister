@@ -95,16 +95,9 @@ def update_conf_file(**kwargs):
     update_flag=kwargs.get('update_flag', False)
     config = {
         "server": {
-            "src_base_path_book": kwargs.get('src_base_path_book', '/podcast/book'),
-            "src_base_path_music": kwargs.get('src_base_path_music', '/podcast/music'),
-            "downloads_path": kwargs.get('downloads_path', '/podcast/downloads'),
             "server_url": kwargs.get('server_url', ''),
             "user": kwargs.get('user', 'admin'),
             "password": kwargs.get('password', 'admin'),
-            "magic": kwargs.get('magic', ''),
-            "mbot_download_api": kwargs.get('mbot_download_api', ''),
-            "update_podcast_switch": kwargs.get('update_podcast_switch', False),
-            "cron_expression": kwargs.get('cron_expression', '5 8-23 * * *'),
         },
         "users": [
                 {"username": "admin", "uuid": "001", "password": "admin", "is_admin": True},
@@ -221,18 +214,11 @@ def conf(binder):
     theme_conf = conf.theme
 
     # 将基础设置绑定注入到整个项目
-    src_base_path_book = base_conf.src_base_path_book
-    src_base_path_music = base_conf.src_base_path_music
-    downloads_path = base_conf.downloads_path
     server_url = base_conf.server_url
     user=base_conf.user
     password=base_conf.password
-    magic=base_conf.magic
-    cron_expression=base_conf.cron_expression
-    mbot_download_api=base_conf.mbot_download_api
-    update_podcast_switch=base_conf.update_podcast_switch
     
-    server_conf = ServerConf(src_base_path_book,src_base_path_music, downloads_path, server_url, user, password, magic, cron_expression, mbot_download_api,update_podcast_switch)
+    server_conf = ServerConf(server_url, user, password)
     binder.bind(ServerConf, server_conf)
     
     # 将通知设置绑定注入到整个项目
@@ -273,45 +259,16 @@ def update_conf():
 
     base_conf = inject.instance(ServerConf)
     notify_conf = inject.instance(NotifyConf)
-    src_base_path_book = base_conf.src_base_path_book
-    src_base_path_music = base_conf.src_base_path_music
-    downloads_path = base_conf.downloads_path
     server_url = base_conf.server_url
-    magic = base_conf.magic
-    update_podcast_switch = base_conf.update_podcast_switch
     
-    cron_expression = base_conf.cron_expression
-    mbot_download_api = base_conf.mbot_download_api
     pic_url = notify_conf.pic_url
     notify_switch = notify_conf.notify_switch
 
-    exts = ['.m4a', '.mp3', '.flac', '.m4b']
-    dst_base_path = f"/app/frontend/static/podcast/audio"
-
     config = {
-        "src_base_path_music": src_base_path_music,
-        "src_base_path_book": src_base_path_book,
-        "downloads_path": downloads_path,
         "server_url": server_url,
-        "update_podcast_switch": update_podcast_switch,
-        "cron_expression": cron_expression,
-        "mbot_download_api": mbot_download_api,
-        "exts": exts,
-        "dst_base_path": dst_base_path,
-        "magic": magic,
         "notify_switch": notify_switch,
         "pic_url": pic_url,
     }
-    # logger.info(f"有声书父文件夹：['{src_base_path_book}']")
-    # logger.info(f"音乐父文件夹：['{src_base_path_music}']")
-    # logger.info(f"下载文件夹：['{downloads_path}']")
-    # update_podcast_config(config)
-    # event_config(config)
-    # audio_tools_config(config)
-    # podcast_config(config)
-    # cmd_config(config)
-    # xmly_dl_config(config)
-    
 
 
     
