@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
+import svgr from "vite-plugin-svgr";
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), ".", dir);
@@ -13,7 +14,7 @@ export default defineConfig({
   root: "./",
   base: "/",
   publicDir: "public",
-  plugins: [react()],
+  plugins: [svgr(), react()],
   resolve: {
     alias: [
       {
