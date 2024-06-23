@@ -4,7 +4,7 @@ import FileItem from "./components/FileItem";
 import useSWR from "swr";
 import { Fragment, useEffect, useState } from "react";
 import { message } from "antd";
-import Spin from "/@/assets/svg/spin.svg?react";
+import Spin from "/@/assets/icon/spin.svg?react";
 
 const Index = () => {
   let [searchParams, setSearchParams] = useSearchParams();

@@ -56,3 +56,22 @@ html {
   --safe-area-inset-top: env(safe-area-inset-top);
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
 }
+
+.ant-dropdown-menu {
+  background: rgba(255, 255, 255, 20%) !important;
+  backdrop-filter: blur(6px) !important;
+  border-radius: 10px !important;
+  padding: 6px !important;
+}
+
+.ant-dropdown-menu-item {
+  min-width: 120px;
+  border-radius: 8px !important;
+  color: #fff !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: rgba(255, 255, 255, 0.649) !important;
+  border-radius: 8px !important;
+  color: #131313 !important;
+}
