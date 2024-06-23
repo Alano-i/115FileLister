@@ -15,11 +15,8 @@ conf_dir = os.path.join(workdir, 'conf')
 if not os.path.exists(conf_dir):
     os.makedirs(conf_dir)
 
-if not os.path.exists(f'{workdir}/subscribe.json'):
-    with open(f'{workdir}/subscribe.json', 'w', encoding='utf-8') as file:
-        file.write('{}')
-if not os.path.exists(f'{workdir}/podcast.json'):
-    with open(f'{workdir}/podcast.json', 'w', encoding='utf-8') as file:
+if not os.path.exists(f'{workdir}/115-cookies.txt'):
+    with open(f'{workdir}/115-cookies.txt', 'w', encoding='utf-8') as file:
         file.write('{}')
 
 os.environ["WORKDIR"] = workdir

@@ -49,7 +49,9 @@ __doc__ = """\
 
 from os import environ
 cookies = environ.get("cookies")
-cookies_path = environ.get("cookies_path")
+WORKDIR = os.environ.get('WORKDIR', '/app/data')
+
+cookies_path = f"{WORKDIR}/115-cookies.txt"
 lock_dir_methods = environ.get("lock_dir_methods") is not None
 path_persistence_commitment = environ.get("path_persistence_commitment") is not None
 

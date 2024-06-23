@@ -36,7 +36,7 @@ const Index = () => {
       return (
         <div className="flex items-center text-[14px] text-[#ffffffa8] py-[12px]">
           <svg
-            className="animate-spin h-[22px] w-[22px] mr-[6px]  text-[#ffffff]"
+            className="animate-spin h-[22px] w-[22px] mr-[8px]  text-[#ffffff]"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -70,7 +70,7 @@ const Index = () => {
           <tr className="text-[13px] text-[#ffffff4f]">
             <th className="text-left py-[4px] w-full">名称</th>
             <th className="text-center py-[4px] whitespace-nowrap">大小</th>
-            <th className="text-center py-[4px] whitespace-nowrap">修改日期</th>
+            <th className="text-center py-[4px] whitespace-nowrap">修改时间</th>
             <th className="text-right py-[4px] pr-[14px]">操作</th>
           </tr>
         </thead>
