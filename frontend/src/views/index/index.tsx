@@ -4,6 +4,7 @@ import FileItem from "./components/FileItem";
 import useSWR from "swr";
 import { Fragment, useEffect, useState } from "react";
 import { message } from "antd";
+import Spin from "/@/assets/svg/spin.svg?react";
 
 const Index = () => {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -35,26 +36,7 @@ const Index = () => {
     if (isFileListLoading) {
       return (
         <div className="flex items-center text-[14px] text-[#ffffffa8] py-[12px]">
-          <svg
-            className="animate-spin h-[22px] w-[22px] mr-[8px]  text-[#ffffff]"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            ></circle>
-            <path
-              className="opacity-60"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v8H4z"
-            ></path>
-          </svg>
+          <Spin className="animate-spin h-[22px] w-[22px] mr-[8px]  text-[#ffffff]" />
           <span className="leading-none">加载中...</span>
         </div>
       );
@@ -78,7 +60,7 @@ const Index = () => {
           {fileList?.map((file) => {
             return (
               <FileItem
-                key={file.id}
+                key={file.pickcode}
                 file={file}
                 onClick={() => {
                   if (file.is_directory) {
