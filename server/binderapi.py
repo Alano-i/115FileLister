@@ -9,17 +9,10 @@ class UsersConf:
 
 class ServerConf:
 
-    def __init__(self, src_base_path_book,src_base_path_music,downloads_path,server_url,user,password,magic,cron_expression='5 8-23 * * *',mbot_download_api='',update_podcast_switch=False):
-        self.src_base_path_book = src_base_path_book
-        self.src_base_path_music = src_base_path_music
-        self.downloads_path = downloads_path
+    def __init__(self, server_url,user,password):
         self.server_url = server_url
         self.user = user
         self.password = password
-        self.magic = magic
-        self.mbot_download_api = mbot_download_api
-        self.cron_expression = cron_expression
-        self.update_podcast_switch = update_podcast_switch
 
 class NotifyConf:
 

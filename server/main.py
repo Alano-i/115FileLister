@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-from server.route.route import main_router
 from apscheduler.triggers.cron import CronTrigger
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -19,7 +18,6 @@ import inject
 import uvicorn
 import httpx
 import logging.config
-from server.func.functions import *
 import os
 from server.route.logs import ws_router
 
@@ -30,7 +28,6 @@ logger = logging.getLogger(__name__)
 
 
 create_all()
-
 
 
 ####################################################################################################################

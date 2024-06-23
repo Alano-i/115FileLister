@@ -21,27 +21,8 @@ FREEZE_DURATION = 30
 
 # 定义一个Pydantic模型来解析和验证请求体
 class RequestData(BaseModel):
-    album_id: str = ""
-    remove: bool = False
-    book_title: str = ""
-    author: str = ""
-    reader: str = ""
-    cover_url: str = ""
-    ep_start: int = 1
-    # downloaded_path_base: str = ""
-    audio_start: int = 0
-    audio_end: int = 0
-    index_on: bool = False
-    index_offset: int = 0
-    src_base_path_book: str = "",
-    src_base_path_music: str = "",
-    downloads_path: str = ''                      # 下载文件夹
-    update_podcast_switch: bool = False            # 同步xmly开关
     notify_switch: bool = False            # 通知开关
-    cron_expression: str = '5 8-23 * * *'         # 定时任务
     server_url: str = ''                               # 外网域名
-    magic: str = ''                                    # 魔法
-    mbot_download_api: str = ''                        # Mbot下载API
     channel: str = 'qywx'                              # 通知渠道
     pic_url: str = ''                                  # 默认推送图
     qywx_base_url: str = 'https://qyapi.weixin.qq.com'  # 企业微信api地址，需要代理填代理地址即可
@@ -61,30 +42,6 @@ class RequestData(BaseModel):
     password: str = 'admin'
     proxy: str = ''
     theme: str = 'dark'
-    input_dirs: str = ''
-    output_dir: str = ''
-    series: str = ''
-    cliped_folder: str = ''
-    clip_configs: str = ''
-    use_filename: bool = True
-    make_podcast: bool = True
-    force: bool = True
-    year: str = ''
-    auto_path: str = ''
-    albums: str = ''
-    art_album: str = ''
-    subject: str = ''
-    podcast_summary: str = ''
-    podcast_category: str = ''
-    is_book_config: str = ''
-    audio_paths: str = ''
-    move_out_configs: str = ''
-    album: str = ''
-    is_group: bool = True
-    short_filename: bool = True
-    deep: bool = False
-    cut: bool = True
-    diy_cover: bool = True
 
 
 @user_router .get("/users/me")
@@ -155,9 +112,6 @@ async def login_for_access_token(data: RequestData, response: Response):
     access_token = create_access_token(
         data={"sub": user['username']}, expires_delta=access_token_expires)
 
-    # content = {"success": True, "code": 0, "data": "登录成功！", "message": "OK"}
-    # response = JSONResponse(content=content)
-
     # 使用 data_to_json 函数设置响应内容
     response = data_to_json(message="登录成功！", data={"username": data.username})
     # 设置 Cookie 参数
@@ -171,10 +125,6 @@ async def login_for_access_token(data: RequestData, response: Response):
         secure=False,               # HTTP：False， HTTPS: True
         samesite='Strict'           # 在开发环境中，因为是 HTTP，可以使用 Lax 或 Strict
     )
-    # 后端打印响应头
-    # logger.info(f"响应头:{response.headers}")
-    # config_dict = response.__dict__
-    # logger.info(f"config_dict:{config_dict}")
     return response
 
 

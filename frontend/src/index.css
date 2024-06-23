@@ -58,20 +58,24 @@ html {
 }
 
 .ant-dropdown-menu {
-  background: rgba(255, 255, 255, 20%) !important;
-  backdrop-filter: blur(6px) !important;
-  border-radius: 10px !important;
+  /* background: rgba(255, 255, 255, 7%) !important; */
+  background: #242424 !important;
+  /* backdrop-filter: blur(18px) !important; */
+  /* -webkit-backdrop-filter: blur(18px) !important; */
+  border-radius: 8px !important;
   padding: 6px !important;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.5) !important;
 }
 
 .ant-dropdown-menu-item {
   min-width: 120px;
-  border-radius: 8px !important;
+  border-radius: 5px !important;
+  margin: 2px !important;
+  padding: 8px !important;
   color: #fff !important;
 }
 
 .ant-dropdown-menu-item:hover {
-  background: rgba(255, 255, 255, 0.649) !important;
-  border-radius: 8px !important;
-  color: #131313 !important;
+  background: rgba(255, 255, 255, 1) !important;
+  color: #000000 !important;
 }
