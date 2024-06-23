@@ -1,7 +1,14 @@
 import dayjs from "dayjs";
-import { FileInfo } from "/@/api";
-import PlayIcon from "/@/assets/svg/play.svg?react";
-import MoreIcon from "/@/assets/svg/more.svg?react";
+import { FileInfo, fileM3u8 } from "/@/api";
+import PlayIcon from "/@/assets/icon/play.svg?react";
+import MoreIcon from "/@/assets/icon/more.svg?react";
+import { Dropdown, MenuProps, Modal } from "antd";
+import {
+  InfoCircleOutlined,
+  FileTextOutlined,
+  DownloadOutlined,
+  LinkOutlined,
+} from "@ant-design/icons";
 
 // prettier-ignore
 // 定义文件类型与图标的对应关系
@@ -77,9 +84,51 @@ const FileItem = ({
   const fileType = getFileType(file.name);
   const fileIcon = getFileIcon(fileType);
 
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "属性",
+      icon: <InfoCircleOutlined />,
+      onClick: () => {
+        Modal.info({
+          title: "属性",
+          content: (
+            <div className="text-[14px] max-h-[400px] overflow-auto">
+              {JSON.stringify(file, null, 2)}
+            </div>
+          ),
+          onOk() {},
+        });
+      },
+    },
+    {
+      key: "2",
+      label: "描述",
+      icon: <FileTextOutlined />,
+    },
+    fileType === "video"
+      ? {
+          key: "3",
+          label: "M3U8",
+          icon: <LinkOutlined />,
+          onClick: () => {
+            window.open(file.short_url?.replace("/download", "/m3u8"));
+          },
+        }
+      : null,
+    {
+      key: "4",
+      label: "下载",
+      icon: <DownloadOutlined />,
+      onClick: () => {
+        window.open(file?.short_url);
+      },
+    },
+  ].filter(Boolean);
+
   return (
     <tr
-      className="group cursor-pointer hover:bg-[#FFFFFF0D] text-[14px] group-hover:text-[15px] text-[#FFFFFFCC] group-hover:text-[#ffffffee] transition-all duration-300 ease-in-out"
+      className="file-item group cursor-pointer hover:bg-[#FFFFFF0D] text-[14px] group-hover:text-[15px] text-[#FFFFFFCC] group-hover:text-[#ffffffee] transition-all duration-300 ease-in-out"
       onClick={onClick}
     >
       <td className="rounded-l-[8px]">
@@ -115,10 +164,15 @@ const FileItem = ({
               </div>
             </div>
           )}
-          <div className=" cursor-pointer rounded-[6px] bg-[#FFFFFF0D] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
-            <div className="text-[14px] leading-[14px] flex items-center px-[12px] py-[10px] hover:text-[#000000] transition-all duration-300 ease-in-out">
-              <MoreIcon className="w-[16px] h-[16px]" />
-            </div>
+          <div
+            className=" cursor-pointer rounded-[6px] bg-[#FFFFFF0D] hover:bg-[#ffffff] transition-all duration-300 ease-in-out"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Dropdown menu={{ items }} trigger={["click"]}>
+              <div className="text-[14px] leading-[14px] flex items-center px-[12px] py-[10px] hover:text-[#000000] transition-all duration-300 ease-in-out">
+                <MoreIcon className="w-[16px] h-[16px]" />
+              </div>
+            </Dropdown>
           </div>
         </div>
       </td>

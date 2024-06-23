@@ -28,6 +28,8 @@ export interface FileInfo {
   hidden: boolean;
   described: boolean;
   ancestors: Ancestor[];
+  url?: string;
+  short_url?: string;
 }
 
 export type FileListResponse = FileInfo[];
@@ -150,7 +152,7 @@ export const fileM3u8 = (params: {
   pickcode?: string;
   id?: number;
   path?: string;
-  definition: number;
+  definition?: number;
 }) =>
   defHttp.get({
     url: `/m3u8`,
