@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
-import { FileInfo, fileM3u8 } from "/@/api";
+import { FileInfo } from "/@/api";
 import PlayIcon from "/@/assets/icon/play.svg?react";
 import MoreIcon from "/@/assets/icon/more.svg?react";
-import { Dropdown, MenuProps, Modal } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import {
   InfoCircleOutlined,
   FileTextOutlined,
@@ -86,29 +86,24 @@ const FileItem = ({
 
   const items: MenuProps["items"] = [
     {
-      key: "1",
-      label: "属性",
+      key: "desc",
+      label: "备注",
       icon: <InfoCircleOutlined />,
       onClick: () => {
-        Modal.info({
-          title: "属性",
-          content: (
-            <div className="text-[14px] max-h-[400px] overflow-auto">
-              {JSON.stringify(file, null, 2)}
-            </div>
-          ),
-          onOk() {},
-        });
+        window.open(file.short_url?.replace("/download", "/desc"));
       },
     },
     {
-      key: "2",
-      label: "描述",
+      key: "attr",
+      label: "属性",
       icon: <FileTextOutlined />,
+      onClick: () => {
+        window.open(file.short_url?.replace("/download", "/attr"));
+      },
     },
     fileType === "video"
       ? {
-          key: "3",
+          key: "video",
           label: "M3U8",
           icon: <LinkOutlined />,
           onClick: () => {
@@ -117,7 +112,7 @@ const FileItem = ({
         }
       : null,
     {
-      key: "4",
+      key: "download",
       label: "下载",
       icon: <DownloadOutlined />,
       onClick: () => {
