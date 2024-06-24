@@ -112,7 +112,7 @@ if cookies_path and cookies != client.cookies:
 try:
     device = client.login_device()["icon"]
 except Exception as e:
-    logger.error(f"服务启动失败，请在 [/server/115-cookies.txt] 中输入有效的 115 cookies")
+    logger.error(f"服务启动失败，请在 [/app/data/115-cookies.txt] 中输入有效的 115 cookies")
 
 
 if device not in AVAILABLE_APPS:
