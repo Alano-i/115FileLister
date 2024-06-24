@@ -8,7 +8,7 @@ import logging
 # from server.func.event import event_config
 # from server.func.podcast import podcast_config
 # from server.func.command import cmd_config
-from server.func.functions import hlink, process_path
+# from server.func.functions import hlink, process_path
 # from server.func.xmly_download import xmly_dl_config
 # from server.tasks.update_podcast import update_podcast_config
 
