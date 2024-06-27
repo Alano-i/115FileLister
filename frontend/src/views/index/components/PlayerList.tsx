@@ -123,7 +123,10 @@ const PlayerList = ({
               <div
                 key={player.name}
                 className="flex flex-col items-center justify-center space-y-[8px] w-[100px] h-[104px] rounded-[10px] hover:bg-[#ffffff0f] cursor-pointer transition-all duration-300 ease-in-out"
-                onClick={() => window.open(player.url, "_blank")}
+                onClick={() => {
+                  console.log(player.url); // 输出URL到控制台
+                  window.open(player.url, "_blank");
+                }}
               >
                 <img
                   src={player.icon}
