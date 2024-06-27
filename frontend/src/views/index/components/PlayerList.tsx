@@ -36,42 +36,52 @@ const getPlayer = (url: string) => {
     {
       name: "IINA",
       url: `iina://weblink?url=${url}`,
+      icon: "/img/iina.svg",
     },
     {
-      name: "PotPlayer",
+      name: "Pot",
       url: `potplayer://${url}`,
+      icon: "/img/potplayer.svg",
     },
     {
       name: "VLC",
       url: `vlc://${url}`,
+      icon: "/img/vlc.svg",
     },
     {
       name: "Fileball",
       url: `filebox://play?url=${url}`,
+      icon: "/img/fileball.svg",
     },
     {
-      name: "MX Player",
+      name: "MX",
       url: `intent:${url}#Intent;package=com.mxtech.videoplayer.pro;S.title=;end`,
+      icon: "/img/mxplayer.svg",
     },
     {
-      name: "infuse",
+      name: "Infuse",
       url: `infuse://x-callback-url/play?url=${url}`,
+      icon: "/img/infuse.svg",
     },
     {
       name: "nPlayer",
       url: `nplayer-${url}`,
+      icon: "/img/nplayer.svg",
     },
     {
-      name: "OmniPlayer",
+      name: "Omni",
       url: `omniplayer://weblink?url=${url}`,
+      icon: "/img/omni.png",
     },
     {
-      name: "Fig Player",
+      name: "Fig",
       url: `figplayer://weblink?url=${url}`,
+      icon: "/img/fig.png",
     },
     {
       name: "MPV",
       url: `mpv://${url}`,
+      icon: "/img/mpv.png",
     },
   ];
 };
@@ -96,20 +106,36 @@ const PlayerList = ({
 
   return (
     <Modal
-      title="播放器"
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       centered
+      width="auto"
+      footer={null}
     >
-      {getPlayer(window.location.host + url).map((player) => (
-        <div className="flex justify-between" key={player.name}>
-          {player.name}
-          <a href={player.url} target="_blank" rel="noreferrer">
-            跳转
-          </a>
+      {
+        <div>
+          <div className="text-center mb-8 text-[18px] text-[#ffffffcc] font-semibold">
+            选择播放器
+          </div>
+          <div className="grid px-6 pb-6 grid-cols-5 gap-x-4 gap-y-4">
+            {getPlayer(window.location.host + url).map((player) => (
+              <div
+                key={player.name}
+                className="flex flex-col items-center justify-center space-y-[8px] w-[100px] h-[104px] rounded-[10px] hover:bg-[#ffffff0f] cursor-pointer transition-all duration-300 ease-in-out"
+                onClick={() => window.open(player.url, "_blank")}
+              >
+                <img
+                  src={player.icon}
+                  className="w-[50px] h-[50px]"
+                  alt="player"
+                />
+                <span className="text-[#FFFFFFCC]">{player.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      }
     </Modal>
   );
 };
