@@ -39,11 +39,11 @@ const getPlayer = (file: FileInfo) => {
       url: `nplayer-${url}`,
       icon: "/img/nplayer.svg",
     },
-    {
-      name: "Omni",
-      url: `omniplayer://weblink?url=${url}`,
-      icon: "/img/omni.png",
-    },
+    // {
+    //   name: "Omni",
+    //   url: `omniplayer://weblink?url=${url}`,
+    //   icon: "/img/omni.png",
+    // },
     {
       name: "Fig",
       url: `figplayer://weblink?url=${url}`,
@@ -55,9 +55,9 @@ const getPlayer = (file: FileInfo) => {
       icon: "/img/mpv.png",
     },
     {
-      name: "ArtPlayer",
+      name: "在线播放",
       url: `/player?pickcode=${file.pickcode}`,
-      icon: "https://raw.githubusercontent.com/zhw2590582/ArtPlayer/master/images/logo.png",
+      icon: "/img/artplayer.png",
     },
   ];
 };
@@ -109,7 +109,7 @@ const PlayerList = ({
                   className="w-[50px] h-[50px]"
                   alt="player"
                 />
-                <span className="text-[#FFFFFFCC]">{player.name}</span>
+                <span className="text-[#FFFFFFCC] text-[14px]">{player.name}</span>
               </div>
             ))}
           </div>

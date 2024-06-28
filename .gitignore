@@ -3,9 +3,9 @@ __pycache__/
 
 # 忽略 data/ 文件夹下的所有文件
 data/*
-# 但不忽略 podcast.json 和 subscribe.json
-!data/podcast.json
-!data/subscribe.json
+# 但不忽略 115-cookies example.txt
+!data/115-cookies example.txt
+
 
 venv/
 # Logs
