@@ -170,7 +170,7 @@ const FileItem = ({
                 播放
               </div>
               <PlayerList
-                url={`/api/url?pickcode=${file.pickcode}`}
+                url={`/api/download?pickcode=${file.pickcode}`}
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
               />
