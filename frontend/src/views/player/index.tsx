@@ -12,8 +12,8 @@ const Player = () => {
   const artRef = useRef(null);
 
   const option = {
-    // url: `/api/m3u8?pickcode=${pickcode}`,
-    url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    url: `/api/m3u8?pickcode=${pickcode}`,
+    // url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     type: "m3u8",
     // setting: true,
     plugins: [
