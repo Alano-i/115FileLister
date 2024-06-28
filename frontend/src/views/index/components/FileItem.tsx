@@ -94,7 +94,7 @@ const FileItem = ({
           label: "下载",
           icon: <DownloadOutlined style={{ fontSize: "16px" }} />,
           onClick: () => {
-            window.open(`/api/download?pickcode=${file.pickcode}`);
+            window.location.href = `/api/download?pickcode=${file.pickcode}`;
           },
         },
     {

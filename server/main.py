@@ -540,7 +540,6 @@ def startup():
     update_conf_file()
     update_conf()
     logger.info(f'程序启动成功')
-    # 定时任务
 
 def main():
     os.environ["VERSION"] = "V0.1.0"
