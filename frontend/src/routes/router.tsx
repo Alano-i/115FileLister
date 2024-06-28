@@ -1,13 +1,10 @@
 import React from "react";
 import Index from "/@/views/index";
-
-//角色
-type Role = "admin" | "user";
+import Player from "/@/views/player";
 
 interface T {
   path: string;
   element: React.ReactNode;
-  role?: Role | undefined;
   children?: Array<T>;
 }
 
@@ -15,5 +12,9 @@ export const Router: Array<T> = [
   {
     path: "/",
     element: <Index />,
+  },
+  {
+    path: "/player",
+    element: <Player />,
   },
 ];
