@@ -16,6 +16,8 @@ const Player = () => {
     // url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     type: "m3u8",
     setting: true,
+    fullscreen: true,
+    fullscreenWeb: true,
     plugins: [
       artplayerPluginHlsQuality({
         // Show quality in control
