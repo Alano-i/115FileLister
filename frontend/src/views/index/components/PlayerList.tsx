@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import { FileInfo } from "/@/api";
 
 const getPlayer = (file: FileInfo) => {
-  const url = window.location.host + `/api/download?pickcode=${file.pickcode}`;
+  const url = `${window.location.protocol}//${window.location.host}/api/download?pickcode=${file.pickcode}`;
   return [
     {
       name: "IINA",

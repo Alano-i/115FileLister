@@ -19,17 +19,17 @@ const Player = () => {
     plugins: [
       artplayerPluginHlsQuality({
         // Show quality in control
-        control: true,
+        control: false,
 
         // Show quality in setting
-        // setting: true,
+        setting: true,
 
         // Get the resolution text from level
         getResolution: (level) => level.height + "P",
 
         // I18n
-        title: "Quality",
-        auto: "Auto",
+        title: "质量",
+        auto: "自动",
       }),
     ],
     customType: {
@@ -48,7 +48,7 @@ const Player = () => {
         } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
           video.src = url;
         } else {
-          art.notice.show = "Unsupported playback format: m3u8";
+          art.notice.show = "不支持播放格式: m3u8";
         }
       },
     },
