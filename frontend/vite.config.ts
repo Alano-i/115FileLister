@@ -4,6 +4,8 @@ import { resolve } from "path";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import svgr from "vite-plugin-svgr";
+import tailwindcssNesting from "tailwindcss/nesting";
+import postcssImport from "postcss-import";
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), ".", dir);
@@ -46,7 +48,7 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      plugins: [tailwindcss, autoprefixer],
+      plugins: [postcssImport, tailwindcssNesting, tailwindcss, autoprefixer],
     },
   },
 });
