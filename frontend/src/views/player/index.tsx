@@ -15,7 +15,7 @@ const Player = () => {
     url: `/api/m3u8?pickcode=${pickcode}`,
     // url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     type: "m3u8",
-    // setting: true,
+    setting: true,
     plugins: [
       artplayerPluginHlsQuality({
         // Show quality in control
@@ -25,7 +25,11 @@ const Player = () => {
         setting: true,
 
         // Get the resolution text from level
-        getResolution: (level) => level.height + "P",
+        getResolution: (level) => {
+          console.info(level);
+          if (level.height <= 0) return "默认";
+          return level.height + "P";
+        },
 
         // I18n
         title: "质量",
