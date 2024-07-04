@@ -3,11 +3,11 @@ postinstall:
 	cd server && pip3 install -U -r requirements.txt
 
 #启动前端
-dev-frontend:
+dev-f:
 	cd frontend && pnpm dev &
 
 #启动后端
-dev-backend:
+dev-b:
 	python3 start.py
 
 #安装前端依赖包
@@ -20,14 +20,14 @@ build:
 
 #启动前后端
 #在终端执行 make dev
-dev:dev-frontend dev-backend
+dev:dev-f dev-b
 
 #启动前后端
 #在终端执行 make dev
 dev2:
-	concurrently --kill-others-on-fail "make dev-frontend" "make dev-backend"
-dev-backend2:
-	concurrently --kill-others-on-fail "make dev-backend"
+	concurrently --kill-others-on-fail "make dev-f" "make dev-b"
+dev-b2:
+	concurrently --kill-others-on-fail "make dev-b"
 
 postinstall2:
 	concurrently --kill-others-on-fail "make postinstall"
