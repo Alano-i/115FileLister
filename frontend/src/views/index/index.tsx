@@ -49,7 +49,7 @@ const Index = () => {
     return (
       <table className="table-auto w-full" rules="none">
         <thead>
-          <tr className="text-[13px] text-[#ffffff4f]">
+          <tr className="hidden sm:table-row text-[13px] text-[#ffffff4f]">
             <th className="text-left py-[4px] w-full">名称</th>
             <th className="text-center py-[4px] whitespace-nowrap">大小</th>
             <th className="text-center py-[4px] whitespace-nowrap">修改时间</th>
