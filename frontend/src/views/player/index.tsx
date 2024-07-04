@@ -92,14 +92,14 @@ const Player = () => {
   }
 
   return (
-    <div>
-      <div
+    <div className="md:px-20 h-full flex justify-center items-center rounded-[50px]">
+      <div className="w-full aspect-video rounded-[50px]"
         // 播放器的尺寸依赖于容器 container 的尺寸，所以你的容器 container 必须是有尺寸的
-        style={{
-          width: "100%",
-          height: "720px",
-          margin: "0",
-        }}
+        // style={{
+        //   width: "100%",
+        //   height: "720px",
+        //   margin: "0",
+        // }}
         ref={artRef}
       />
     </div>
