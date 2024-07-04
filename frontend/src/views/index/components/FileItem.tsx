@@ -163,7 +163,7 @@ const FileItem = ({
       <td className="whitespace-nowrap overflow-hidden rounded-r-[8px] text-center">
         <div className="flex gap-2 p-2 justify-end items-center">
           {fileType === "video" && (
-            <div className=" cursor-pointer ml-6 rounded-[6px] bg-[#FFFFFF0D] sm:hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
+            <div className="cursor-pointer ml-6 rounded-[6px] bg-[#FFFFFF0D] sm:hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
               <div
                 className="text-[14px] leading-[14px] text-[#ffffffcc] flex items-center px-[12px] py-[10px] sm:hover:text-[#000000] transition-all duration-300 ease-in-out"
                 onClick={(e) => {
