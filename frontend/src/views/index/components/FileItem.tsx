@@ -129,11 +129,11 @@ const FileItem = ({
 
   return (
     <tr
-      className="file-item group cursor-pointer hover:bg-[#FFFFFF0D] text-[14px] group-hover:text-[15px] text-[#FFFFFFCC] group-hover:text-[#ffffffee] transition-all duration-300 ease-in-out"
+      className="file-item group cursor-pointer sm:hover:bg-[#FFFFFF0D] text-[14px] sm:group-hover:text-[15px] text-[#FFFFFFCC] sm:group-hover:text-[#ffffffee] transition-all duration-300 ease-in-out"
       onClick={onClick}
     >
       <td className="rounded-l-[8px]">
-        <div className="flex items-center mb-[2px] px-0 hover:px-[14px] py-[16px] transition-all duration-300 ease-in-out">
+        <div className="flex items-center mb-[2px] px-0 sm:hover:px-[14px] py-[16px] transition-all duration-300 ease-in-out">
           {file.is_directory ? (
             <img
               src="/img/folder.svg"
@@ -144,13 +144,18 @@ const FileItem = ({
             <img src={fileIcon} className="mr-2 w-[32px] h-[32px]" alt="file" />
           )}
           {/* <div className="line-clamp-1">{file.name}</div> */}
-          <div>{file.name}</div>
+          <div className="flex flex-col">
+            <div className="line-clamp-1 break-all">{file.name}</div>
+            <div className="block sm:hidden text-xs opacity-50">
+              {dayjs(file.mtime * 1000).format("YYYY-MM-DD HH:mm")}
+            </div>
+          </div>
         </div>
       </td>
-      <td className="whitespace-nowrap text-center min-w-[150px]">
+      <td className="hidden sm:table-cell whitespace-nowrap text-center min-w-[150px]">
         <div className="p-2">{file.format_size || "-"}</div>
       </td>
-      <td className="whitespace-nowrap text-center min-w-[200px]">
+      <td className="hidden sm:table-cell whitespace-nowrap text-center min-w-[200px]">
         <div className="p-2">
           {dayjs(file.mtime * 1000).format("YYYY-MM-DD HH:mm")}
         </div>
@@ -158,9 +163,9 @@ const FileItem = ({
       <td className="whitespace-nowrap overflow-hidden rounded-r-[8px] text-center">
         <div className="flex gap-2 p-2 justify-end items-center">
           {fileType === "video" && (
-            <div className=" cursor-pointer ml-6 rounded-[6px] bg-[#FFFFFF0D] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
+            <div className=" cursor-pointer ml-6 rounded-[6px] bg-[#FFFFFF0D] sm:hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
               <div
-                className="text-[14px] leading-[14px] text-[#ffffffcc] flex items-center px-[12px] py-[10px] hover:text-[#000000] transition-all duration-300 ease-in-out"
+                className="text-[14px] leading-[14px] text-[#ffffffcc] flex items-center px-[12px] py-[10px] sm:hover:text-[#000000] transition-all duration-300 ease-in-out"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsModalOpen(true);
