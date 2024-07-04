@@ -78,41 +78,39 @@ const Index = () => {
   return (
     <div>
       {/* 面包屑 */}
-      <div className="flex items-center mb-[12px] text-[#FFFFFFaa] text-[14px]">
+      <div className="flex flex-wrap items-center mb-[12px] text-[#FFFFFFaa] text-[14px]">
         <img
           src="/img/home.svg"
           className="mr-[6px] w-[16px] h-[16px] opacity-25"
           alt="back"
         />
-        <span
+        <div
           className="pr-[4px] hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out whitespace-nowrap"
           onClick={() => {
             navTo({ path: "/", ancestors: [] });
           }}
         >
           首页
-        </span>
-        <div>
-          {ancestors.map((item, index) => {
-            return (
-              <Fragment key={item.id}>
-                <span
-                  className="hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out"
-                  onClick={() => {
-                    const newAncestors = ancestors.slice(0, index + 1);
-                    navTo({
-                      path: newAncestors.map((item) => item.name).join("/"),
-                      ancestors: newAncestors,
-                    });
-                  }}
-                >
-                  {item.name}
-                </span>
-                {index !== ancestors.length - 1 && " / "}
-              </Fragment>
-            );
-          })}
         </div>
+        {ancestors.map((item, index) => {
+          return (
+            <Fragment key={item.id}>
+              <span
+                className="hover:text-[#ffffffee] cursor-pointer  transition-all duration-300 ease-in-out"
+                onClick={() => {
+                  const newAncestors = ancestors.slice(0, index + 1);
+                  navTo({
+                    path: newAncestors.map((item) => item.name).join("/"),
+                    ancestors: newAncestors,
+                  });
+                }}
+              >
+                {item.name}
+              </span>
+              {index !== ancestors.length - 1 && " / "}
+            </Fragment>
+          );
+        })}
         <div className="group flex items-center justify-center rounded-[4px] ml-[12px] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
           <img
             src="/img/copy.svg"
@@ -131,29 +129,30 @@ const Index = () => {
           />
         </div>
       </div>
-
-      {/* 返回上级目录 */}
-      {path !== "/" && (
-        <div
-          className="mb-[0px] text-[14px] text-[#FFFFFFCC] hover:text-[15px] hover:text-[#ffffffee] hover:px-[14px] py-[12px] rounded-[8px] cursor-pointer hover:bg-[#ffffff0d] transition-all duration-300 ease-in-out"
-          onClick={async () => {
-            const parentPath = ancestors
-              .slice(0, -1)
-              .map((item) => item.name)
-              .join("/");
-            setSearchParams({ path: parentPath });
-          }}
-        >
-          <div className="flex items-center">
-            <img
-              src="/img/back.svg"
-              className="mr-[6px] w-[9px] opacity-25"
-              alt="back"
-            />
-            返回上级目录
+      <div className="z-10 sticky top-[--safe-area-inset-top] bg-[#131313]">
+        {/* 返回上级目录 */}
+        {path !== "/" && (
+          <div
+            className="mb-[0px] text-[14px] text-[#FFFFFFCC] hover:text-[15px] hover:text-[#ffffffee] hover:px-[14px] py-[12px] rounded-[8px] cursor-pointer hover:bg-[#ffffff0d] transition-all duration-300 ease-in-out"
+            onClick={async () => {
+              const parentPath = ancestors
+                .slice(0, -1)
+                .map((item) => item.name)
+                .join("/");
+              setSearchParams({ path: parentPath });
+            }}
+          >
+            <div className="flex items-center">
+              <img
+                src="/img/back.svg"
+                className="mr-[6px] w-[9px] opacity-25"
+                alt="back"
+              />
+              返回上级目录
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* 文件列表 */}
       {renderFileList()}
