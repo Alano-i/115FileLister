@@ -3,6 +3,7 @@ import { FileInfo } from "/@/api";
 
 const getPlayer = (file: FileInfo) => {
   const url = `${window.location.protocol}//${window.location.host}/api/download?pickcode=${file.pickcode}`;
+  const suffix = file.name.split(".").pop();
   return [
     {
       name: "IINA",
@@ -56,7 +57,7 @@ const getPlayer = (file: FileInfo) => {
     },
     {
       name: "在线播放",
-      url: `/player?pickcode=${file.pickcode}`,
+      url: `/player?pickcode=${file.pickcode}&real_type=${suffix}`,
       icon: "/img/artplayer.png",
     },
   ];
@@ -109,7 +110,9 @@ const PlayerList = ({
                   className="w-[50px] h-[50px]"
                   alt="player"
                 />
-                <span className="text-[#FFFFFFCC] text-[14px]">{player.name}</span>
+                <span className="text-[#FFFFFFCC] text-[14px]">
+                  {player.name}
+                </span>
               </div>
             ))}
           </div>
