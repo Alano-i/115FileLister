@@ -130,6 +130,9 @@ url_cache: MutableMapping[tuple[str, str], P115Url] = TTLCache(64, ttl=0.3)
 
 
 app = Application()
+# 提供静态文件服务：https://www.neoteroi.dev/blacksheep/static-files/
+app.serve_files("./frontend")
+
 # logger = getattr(app, "logger")
 docs = OpenAPIHandler(info=Info(
     title="115 Filelist WEB API Docs", 
