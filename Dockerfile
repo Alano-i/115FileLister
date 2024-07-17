@@ -32,20 +32,19 @@ FROM python:3.11-slim-buster
 ENV TZ=Asia/Shanghai
 
 # 设置 USTC 镜像源
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN sed -i 's|http://mirrors.ustc.edu.cn|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
+
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制后端代码
-COPY ./server /app/server
-# COPY ./start.py /app/
-COPY ./start.sh ./start.py ./supervisord.conf /app/
+# 复制依赖文件
+COPY ./server/requirements.txt /app/server/requirements.txt
+
 
 # 安装依赖和时区设置
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends tzdata \
-    && apt-get install -y ffmpeg \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && python -m pip install --upgrade pip \
@@ -53,11 +52,15 @@ RUN apt-get update -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# 复制后端代码
+COPY ./server /app/server
+COPY ./start.sh ./start.py ./supervisord.conf /app/
+
 # 从构建阶段复制前端构建产物
 COPY --from=build-stage /app/frontend/dist /app/frontend
 
 # 暴露容器内部的端口
-EXPOSE 8686
+EXPOSE 9115
 
 # 启动命令
 # CMD ["python", "/app/start.py"]

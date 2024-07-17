@@ -31,3 +31,13 @@ dev-b2:
 
 postinstall2:
 	concurrently --kill-others-on-fail "make postinstall"
+
+
+#构建docker镜像
+#在终端执行 make docker
+docker:
+	docker build -t alanoo/115_file_lister:latest .
+
+# 构建完成的镜像推送到 Docker Hub
+dp:
+	docker buildx build --platform linux/amd64,linux/arm64 -t alanoo/115_file_lister:latest --push .
