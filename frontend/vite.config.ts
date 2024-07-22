@@ -31,14 +31,12 @@ export default defineConfig({
     // open: true,
     proxy: {
       "/api": {
-        // target: "https://file.36d.icu:3636",
         target: "http://127.0.0.1:9115",
         changeOrigin: true,
         secure: false,
       },
       "/ws": {
         target: "ws://127.0.0.1:9115",
-        // target: "ws://file.36d.icu:3636",
         ws: true,
       },
     },

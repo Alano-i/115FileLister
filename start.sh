@@ -1,5 +1,5 @@
 #!/bin/sh
-user=115Master
+user=115FileLister
 PUID=${PUID:-0}
 PGID=${PGID:-0}
 #create user if not exists
