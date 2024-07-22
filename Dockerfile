@@ -1,6 +1,6 @@
 # 阶段 1: 构建前端静态文件
 # 使用 Node.js 的官方基础镜像
-FROM node:18.12 as build-stage
+FROM node:18.12 AS build-stage
 
 # 设置前端工作目录
 WORKDIR /app/frontend
@@ -32,15 +32,13 @@ FROM python:3.11-slim-buster
 ENV TZ=Asia/Shanghai
 
 # 设置 USTC 镜像源
-RUN sed -i 's|http://mirrors.ustc.edu.cn|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
-
+RUN sed -i 's|http://deb.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
 
 # 设置工作目录
 WORKDIR /app
 
 # 复制依赖文件
 COPY ./server/requirements.txt /app/server/requirements.txt
-
 
 # 安装依赖和时区设置
 RUN apt-get update -y \
@@ -49,7 +47,7 @@ RUN apt-get update -y \
     && echo $TZ > /etc/timezone \
     && apt-get install -y --fix-missing build-essential \
     && python -m pip install --upgrade pip \
-    && pip install --no-cache-dir -i https://pypi.doubanio.com/simple -r /app/server/requirements.txt \
+    && pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r /app/server/requirements.txt \
     && apt-get remove -y build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
