@@ -38,7 +38,7 @@ RUN sed -i 's|http://deb.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g' /etc
 WORKDIR /app
 
 # 复制依赖文件
-COPY ./server/requirements.txt /app/server/requirements.txt
+COPY ./requirements.txt /app/requirements.txt
 
 # 安装依赖和时区设置
 RUN apt-get update -y \
@@ -47,7 +47,7 @@ RUN apt-get update -y \
     && echo $TZ > /etc/timezone \
     && apt-get install -y --fix-missing build-essential \
     && python -m pip install --upgrade pip \
-    && pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r /app/server/requirements.txt \
+    && pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r /app/requirements.txt \
     && apt-get remove -y build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
