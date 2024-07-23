@@ -23,7 +23,12 @@ const fileIconMap: { [key: string]: string[] } = {
   text: ["txt", "ass", "srt"],
   code: ["js", "json", "html", "css", "scss", "py", "less", "md", "xml"],
   audio: ["mp3", "flac", "wav", "aac", "ogg", "wma", "alac", "aiff", "dsd", "pcm", "m4a", "opus", "amr", "ape", "au", "ra", "mp2", "ac3", "dts"],
-  video: ["mkv", "mp4", "avi","iso", "flv", "mov", "wmv", "webm", "mpeg", "mpg", "m4v", "3gp", "3g2", "ts", "vob", "ogv", "mxf", "rm", "rmvb", "asf", "f4v", "f4p", "f4a", "f4b"],
+  video: [
+    "mkv", "mp4", "avi", "m2ts", "iso", "flv", "mov", "wmv", "webm", "mpeg", "mpg", "m4v", 
+    "3gp", "3g2", "ts", "vob", "ogv", "mxf", "rm", "rmvb", "asf", "f4v", "f4p", "f4a", "f4b",
+    "divx", "xvid", "swf", "ogm", "dvr-ms", "mts", "m2v", "gxf", "pvr", "mpeg1", "h264", 
+    "h265", "yuv", "mjpeg", "bik", "bdmv", "mk3d", "m2p", "avs", "f4m"
+  ],
   configuration: ["ini", "yaml", "yml"],
   db: ["db"],
   nfo: ["nfo"],
