@@ -21,6 +21,7 @@ build:
 #启动前后端
 dev:dev-f dev-b
 
+#安装前后端依赖
 install:install-py install-f
 
 #启动前后端
