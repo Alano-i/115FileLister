@@ -157,7 +157,7 @@ docs.ui_providers.append(ReDocUIProvider())
 docs.bind_app(app)
 static_dir = Path(__file__).parents[1] / "static"
 if static_dir.exists():
-    app.serve_files(static_dir)
+    app.serve_files(static_dir,fallback_document="index.html") 
 else:
     app.logger.warning("no frontend provided")
 
