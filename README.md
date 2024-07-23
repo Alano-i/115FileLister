@@ -7,7 +7,7 @@ Figma 设计稿-高保真可交互原型：[移动端](https://www.figma.com/pro
 ```yaml
 version: '3'
 services:
-  redir115:
+  115_file_lister:
     image: alanoo/115_file_lister:latest
     container_name: 115_file_lister
     restart: always
