@@ -57,7 +57,7 @@ COPY ./server /app/server
 COPY ./start.sh ./start.py ./supervisord.conf /app/
 
 # 从构建阶段复制前端构建产物
-COPY --from=build-stage /app/frontend/dist /app/frontend
+COPY --from=build-stage /app/frontend/dist /app/static
 
 # 暴露容器内部的端口
 EXPOSE 9115

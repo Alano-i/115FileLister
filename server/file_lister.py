@@ -70,6 +70,8 @@ else:
 """)
     cookies = environ.get("cookies", "")
     cookies_path = environ.get("cookies_path", "")
+    cookies_path = environ.get("cookies_path", f"{environ.get('WORKDIR', '/app/data')}/115-cookies.txt")
+    environ["VERSION_115_FILE_LISTER"] = f"{__version_str__}"
     web_cookies = environ.get("web_cookies", "")
     lock_dir_methods = environ.get("lock_dir_methods") is not None
     path_persistence_commitment = environ.get("path_persistence_commitment") is not None

@@ -1,5 +1,5 @@
 #安装后端依赖包
-postinstall:
+py:
 	cd server && pip3 install -U -r requirements.txt
 
 #启动前端
