@@ -1,6 +1,10 @@
-#安装后端依赖包
+#安装后端依赖
 install-py:
 	pip3 install -U -r requirements.txt
+
+#安装前端依赖
+install-f:
+	cd frontend && pnpm i
 
 #启动前端
 dev-f:
@@ -10,22 +14,16 @@ dev-f:
 dev-b:
 	python3 start.py
 
-#安装前端依赖包
-install-f:
-	cd frontend && pnpm i
-
 #前端打包
 build:
 	cd frontend && npm run build
 
 #启动前后端
-#在终端执行 make dev
 dev:dev-f dev-b
 
 install:install-py install-f
 
 #启动前后端
-#在终端执行 make dev
 dev2:
 	concurrently --kill-others-on-fail "make dev-f" "make dev-b"
 dev-b2:
@@ -34,12 +32,10 @@ dev-b2:
 postinstall2:
 	concurrently --kill-others-on-fail "make postinstall"
 
-
 #构建docker镜像
-#在终端执行 make docker
 docker:
 	docker build -t alanoo/115_file_lister:latest .
 
-# 构建完成的镜像推送到 Docker Hub
+# 构建 docker 镜像并推送到 Docker Hub
 dp:
 	docker buildx build --platform linux/amd64,linux/arm64 -t alanoo/115_file_lister:latest --push .
