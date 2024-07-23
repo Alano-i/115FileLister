@@ -13,7 +13,7 @@ services:
     restart: always
     network_mode: bridge
     ports:
-      - 9115:80
+      - 9115:9115
     volumes:
       - /appdata/115_file_lister:/app/data
 ```

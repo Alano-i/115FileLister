@@ -20,7 +20,7 @@ parser = ArgumentParser(
     description=__doc__, 
 )
 parser.add_argument("-H", "--host", default="0.0.0.0", help="ip 或 hostname，默认值 '0.0.0.0'")
-parser.add_argument("-p", "--port", default=80, type=int, help="端口号，默认值 80")
+parser.add_argument("-p", "--port", default=9115, type=int, help="端口号，默认值 9115")
 parser.add_argument("-r", "--reload", action="store_true", help="此项目所在目录下的文件发生变动时重启，此选项仅用于调试")
 parser.add_argument("-v", "--version", action="store_true", help="输出版本号")
 
