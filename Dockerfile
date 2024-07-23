@@ -60,7 +60,7 @@ COPY ./start.sh ./start.py ./supervisord.conf /app/
 COPY --from=build-stage /app/frontend/dist /app/static
 
 # 暴露容器内部的端口
-EXPOSE 9115
+EXPOSE 80
 
 # 启动命令
 # CMD ["python", "/app/start.py"]
