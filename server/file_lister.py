@@ -155,12 +155,16 @@ docs = OpenAPIHandler(info=Info(
 ))
 docs.ui_providers.append(ReDocUIProvider())
 docs.bind_app(app)
-app.serve_files(Path(__file__).parents[1] / "static")
+static_dir = Path(__file__).parents[1] / "static"
+if static_dir.exists():
+    app.serve_files(static_dir)
+else:
+    app.logger.warning("no frontend provided")
 
 
 @app.on_middlewares_configuration
 def configure_forwarded_headers(app):
-    app.middlewares.insert(0, ForwardedHeadersMiddleware())
+    app.middlewares.insert(0, ForwardedHeadersMiddleware(accept_only_proxied_requests=False))
 
 
 def format_bytes(
