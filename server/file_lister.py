@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 __author__ = "ChenyangGao <https://chenyanggao.github.io>"
-__version__ = (0, 0, 4)
+__version__ = (0, 0, 5)
 __version_str__ = ".".join(map(str, __version__))
 __doc__ = """\
     🕸️ 获取你的 115 网盘账号上文件信息和下载链接 🕷️
@@ -13,14 +13,21 @@ __doc__ = """\
     - 不能直接请求直链，需要携带特定的 Cookie 和 User-Agent
 """
 
+from argparse import ArgumentParser, RawTextHelpFormatter
+
+parser = ArgumentParser(
+    formatter_class=RawTextHelpFormatter, 
+    description=__doc__, 
+)
+parser.add_argument("-H", "--host", default="0.0.0.0", help="ip 或 hostname，默认值 '0.0.0.0'")
+parser.add_argument("-p", "--port", default=80, type=int, help="端口号，默认值 80")
+parser.add_argument("-r", "--reload", action="store_true", help="此项目所在目录下的文件发生变动时重启，此选项仅用于调试")
+parser.add_argument("-v", "--version", action="store_true", help="输出版本号")
+
+
 if __name__ == "__main__":
-    from argparse import ArgumentParser, RawTextHelpFormatter
     from warnings import warn
 
-    parser = ArgumentParser(
-        formatter_class=RawTextHelpFormatter, 
-        description=__doc__, 
-    )
     parser.add_argument("-c", "--cookies", default="", help="115 登录 cookies，优先级高于 -cp/--cookies-path")
     parser.add_argument("-cp", "--cookies-path", default="", help="""\
 存储 115 登录 cookies 的文本文件的路径，如果缺失，则从 115-cookies.txt 文件中获取，此文件可在如下目录之一: 
@@ -30,11 +37,6 @@ if __name__ == "__main__":
     parser.add_argument("-wc", "--web-cookies", default="", help="提供一个 web 的 cookies，因为目前使用的获取 .m3u8 的接口，需要 web 的 cookies 才能正确获取数据，如不提供，则将自动扫码获取")
     parser.add_argument("-l", "--lock-dir-methods", action="store_true", help="对 115 的文件系统进行增删改查的操作（但不包括上传和下载）进行加锁，限制为不可并发，这样就可减少 405 响应，以降低扫码的频率")
     parser.add_argument("-pc", "--path-persistence-commitment", action="store_true", help="路径持久性承诺，只要你能保证文件不会被移动（可新增删除，但对应的路径不可被其他文件复用），打开此选项，用路径请求直链时，可节约一半时间")
-
-    parser.add_argument("-H", "--host", default="0.0.0.0", help="ip 或 hostname，默认值 '0.0.0.0'")
-    parser.add_argument("-p", "--port", default=80, type=int, help="端口号，默认值 80")
-    parser.add_argument("-r", "--reload", action="store_true", help="此项目所在目录下的文件发生变动时重启，此选项仅用于调试")
-    parser.add_argument("-v", "--version", action="store_true", help="输出版本号")
 
     args = parser.parse_args()
     if args.version:
@@ -49,6 +51,11 @@ if __name__ == "__main__":
 else:
     from os import environ
 
+    args = parser.parse_args()
+    if args.version:
+        print(__version_str__)
+        raise SystemExit(0)
+
     print("""
 \t\t🌍 支持如下环境变量 🛸
 
@@ -61,19 +68,19 @@ else:
     - \x1b[1m\x1b[32mlock_dir_methods\x1b[0m: （\x1b[1m\x1b传入任何值都视为设置，包括空字符串\x1b[0m）对 115 的文件系统进行增删改查的操作（\x1b[1m\x1b但不包括上传和下载\x1b[0m）进行加锁，限制为不可并发，这样就可减少 405 响应，以降低扫码的频率
     - \x1b[1m\x1b[32mpath_persistence_commitment\x1b[0m: （\x1b[1m\x1b传入任何值都视为设置，包括空字符串\x1b[0m）路径持久性承诺，只要你能保证文件不会被移动（\x1b[1m\x1b可新增删除，但对应的路径不可被其他文件复用\x1b[0m），打开此选项，用路径请求直链时，可节约一半时间
 """)
-
     cookies = environ.get("cookies", "")
-    cookies_path = environ.get("cookies_path", f"{environ.get('WORKDIR', '/app/data')}/115-cookies.txt")
-    environ["VERSION_115_FILE_LISTER"] = f"{__version_str__}"
+    cookies_path = environ.get("cookies_path", "")
     web_cookies = environ.get("web_cookies", "")
     lock_dir_methods = environ.get("lock_dir_methods") is not None
     path_persistence_commitment = environ.get("path_persistence_commitment") is not None
-    
+
+
 from asyncio import Lock
 from collections.abc import Mapping, MutableMapping
 from functools import partial, update_wrapper
 from os import stat
 from os.path import dirname, expanduser, join as joinpath, realpath
+from pathlib import Path
 from sys import exc_info
 from urllib.parse import quote
 
@@ -146,6 +153,7 @@ docs = OpenAPIHandler(info=Info(
 ))
 docs.ui_providers.append(ReDocUIProvider())
 docs.bind_app(app)
+app.serve_files(Path(__file__).parents[1] / "static")
 
 
 @app.on_middlewares_configuration
@@ -561,3 +569,22 @@ async def file_subtitle(
         pickcode = await call_wrap(fs.get_pickcode, (path or path2) if id < 0 else id)
     resp = await call_wrap(client.fs_files_video_subtitle, pickcode)
     return resp
+
+
+def main():
+    import uvicorn
+    from pathlib import Path
+
+    uvicorn.run(
+        app, 
+        host=args.host, 
+        port=args.port, 
+        reload=args.reload, 
+        proxy_headers=True, 
+        forwarded_allow_ips="*", 
+    )
+
+
+if __name__ == "__main__":
+    main()
+
