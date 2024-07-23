@@ -30,27 +30,15 @@ docker run -d \
 在 `app/data/115-cookies.txt` 设置 `cookie` ，重启，然后浏览器访问 `IP:9115`
 
 ## 调试
-### 后端安装依赖
 ```bash
-make postinstall
-```
+# 安装依赖
+make install
 
-#### 后端
-```bash
-make dev-b
-```
-
-#### 前端
-```bash
-make dev-f
-```
-
-#### 同时启动
-```bash
+# 启动
 make dev
 ```
 
-## API文档
+### API文档
 后端启动后，浏览器访问 `http://localhost:9115/docs` 查看 API 文档。
 
 ## 致谢
