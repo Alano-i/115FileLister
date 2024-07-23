@@ -17,7 +17,17 @@ services:
     volumes:
       - /appdata/115_file_lister:/app/data
 ```
-`app/data/115-cookies.txt` 设置 `cookie` ，浏览器访问 `IP:9115`
+```bash
+docker run -d \
+    --name='115_file_lister' \
+    --restart always \
+    -p 9115:9115 \
+    -e TZ="Asia/Shanghai" \
+    -v '/appdata/115_file_lister':'/app/data' \
+    alanoo/115_file_lister:latest
+```
+
+在`app/data/115-cookies.txt` 设置 `cookie` ，重启，然后浏览器访问 `IP:9115`
 
 ## 调试
 ### 后端安装依赖
