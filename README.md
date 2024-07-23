@@ -30,5 +30,5 @@ make dev
 ## 致谢
 后端：以上功能的后端核心实现，都来自 [@ChenyangGao](https://github.com/ChenyangGao) 大佬的 [项目](https://github.com/ChenyangGao/web-mount-packs)，本项目的后端部分只是做了微不足道的搬运而已，感谢！
 
-前端：UI页面由 [zkl2333](https://github.com/zkl2333) 大佬帮忙实现的，感谢。
+前端：UI页面由 [zkl2333](https://github.com/zkl2333) 大佬帮忙实现，感谢。
 
