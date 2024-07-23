@@ -17,7 +17,7 @@ services:
     volumes:
       - /appdata/115_file_lister:/app/data
 ```
-
+`app/data/115-cookies.txt` 设置 `cookie` ，浏览器访问 `IP:9115`
 
 ## 调试
 ### 后端安装依赖
