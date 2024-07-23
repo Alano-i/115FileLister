@@ -1,5 +1,5 @@
 #安装后端依赖包
-py:
+install-py:
 	pip3 install -U -r requirements.txt
 
 #启动前端
@@ -11,7 +11,7 @@ dev-b:
 	python3 start.py
 
 #安装前端依赖包
-install:
+install-f:
 	cd frontend && pnpm i
 
 #前端打包
@@ -21,6 +21,8 @@ build:
 #启动前后端
 #在终端执行 make dev
 dev:dev-f dev-b
+
+install:install-py install-f
 
 #启动前后端
 #在终端执行 make dev
