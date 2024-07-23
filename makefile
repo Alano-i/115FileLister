@@ -30,8 +30,9 @@ dev2:
 dev-b2:
 	concurrently --kill-others-on-fail "make dev-b"
 
-postinstall2:
-	concurrently --kill-others-on-fail "make postinstall"
+#安装后端依赖2
+install-py2:
+	concurrently --kill-others-on-fail "make install-py"
 
 #构建docker镜像
 docker:
