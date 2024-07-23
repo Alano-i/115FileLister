@@ -27,7 +27,7 @@ docker run -d \
     alanoo/115_file_lister:latest
 ```
 
-在`app/data/115-cookies.txt` 设置 `cookie` ，重启，然后浏览器访问 `IP:9115`
+在 `app/data/115-cookies.txt` 设置 `cookie` ，重启，然后浏览器访问 `IP:9115`
 
 ## 调试
 ### 后端安装依赖
