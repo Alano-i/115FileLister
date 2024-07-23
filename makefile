@@ -1,6 +1,6 @@
 #安装后端依赖包
 py:
-	cd server && pip3 install -U -r requirements.txt
+	pip3 install -U -r requirements.txt
 
 #启动前端
 dev-f:
