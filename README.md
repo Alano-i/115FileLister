@@ -16,13 +16,15 @@ services:
       - 9115:9115
     volumes:
       - /appdata/115_file_lister:/app/data
+    environment:
+      - path_persistence_commitment="true"
 ```
 ```bash
 docker run -d \
     --name='115_file_lister' \
     --restart always \
     -p 9115:9115 \
-    -e TZ="Asia/Shanghai" \
+    -e path_persistence_commitment="true" \
     -v '/appdata/115_file_lister':'/app/data' \
     alanoo/115_file_lister:latest
 ```
@@ -45,4 +47,3 @@ make dev
 后端：本项目的后端部分的核心实现，都来自 [@ChenyangGao](https://github.com/ChenyangGao) 大佬的 [项目](https://github.com/ChenyangGao/web-mount-packs)。本项目只是做了微不足道的搬运而已，感谢！
 
 前端：UI页面由 [zkl2333](https://github.com/zkl2333) 大佬帮忙实现，感谢。
-
