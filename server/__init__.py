@@ -15,5 +15,5 @@ if not os.path.exists(conf_dir):
 
 if not os.path.exists(f'{workdir}/115-cookies.txt'):
     with open(f'{workdir}/115-cookies.txt', 'w', encoding='utf-8') as file:
-        file.write('UID=; CID=; SEID=;')
+        file.write('')
 os.environ["WORKDIR"] = workdir
