@@ -111,15 +111,15 @@ const Index = () => {
             </Fragment>
           );
         })}
-        <div className="group flex items-center justify-center rounded-[4px] ml-[12px] hover:bg-[#ffffff] transition-all duration-300 ease-in-out">
+        <div className="group flex items-center justify-center rounded-[4px] ml-[12px] hover:bg-[#ffffff24] transition-all duration-300 ease-in-out">
           <img
             src="/img/copy.svg"
-            className="cursor-pointer w-[28px] h-[28px] opacity-100 transition-all duration-300 ease-in-out group-hover:filter group-hover:brightness-0"
+            className="cursor-pointer w-[28px] h-[28px] opacity-30 group-hover:opacity-80 transition-all duration-300 ease-in-out group-hover:filter"
             alt="复制路径"
             onClick={() => {
               navigator.clipboard.writeText(path).then(
                 () => {
-                  message.success("已复制路径");
+                  message.success("已复制路径：" + path);
                 },
                 () => {
                   message.error("复制路径失败，请手动复制");
