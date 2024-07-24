@@ -132,14 +132,15 @@ client = P115Client(cookies, app="qandroid")
 if cookies_path and cookies != client.cookies:
     open(cookies_path, "w").write(client.cookies)
 
-device = client.login_device()["icon"]
-if device not in AVAILABLE_APPS:
-    # 115 浏览器版
-    if device == "desktop":
-        device = "web"
-    else:
-        warn(f"encountered an unsupported app {device!r}, fall back to 'qandroid'")
-        device = "qandroid"
+device = "qandroid"
+if client.cookies:
+    device = client.login_device()["icon"]
+    if device not in AVAILABLE_APPS:
+        # 115 浏览器版
+        if device == "desktop":
+            device = "web"
+        else:
+            warn(f"encountered an unsupported app {device!r}, fall back to 'qandroid'")
 fs = client.get_fs(client, path_to_id=LRUCache(65536))
 # NOTE: id 到 pickcode 的映射
 id_to_pickcode: MutableMapping[int, str] = LRUCache(65536)
@@ -375,6 +376,7 @@ async def login_qrcode_result(request: Request, uid: str, app: str = "qandroid")
     :param uid: 扫码的 uid （由 /api/login/qrcode/token 获取）
     :param app: 绑定到设备，默认值 "qandroid"
     """
+    global device
     resp = await client.login_qrcode_result({"account": uid, "app": app})
     if resp["state"]:
         data = resp["data"]
@@ -384,6 +386,7 @@ async def login_qrcode_result(request: Request, uid: str, app: str = "qandroid")
                 open(cookies_path, "w").write(client.cookies)
             except:
                 logger.exception("can't save cookies to file: %r", cookies_path)
+        device = app
         return data
     raise OSError(resp)
 
