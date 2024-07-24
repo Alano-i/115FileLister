@@ -128,9 +128,16 @@ if not cookies:
             except FileNotFoundError:
                 pass
 
+def save_cookies():
+    if cookies_path:
+        try:
+            open(cookies_path, "w").write(client.cookies)
+        except Exception:
+            logger.exception("can't save cookies to file: %r", cookies_path)
+
 client = P115Client(cookies, app="qandroid")
 if cookies_path and cookies != client.cookies:
-    open(cookies_path, "w").write(client.cookies)
+    save_cookies()
 
 device = "qandroid"
 if client.cookies:
@@ -141,6 +148,7 @@ if client.cookies:
             device = "web"
         else:
             warn(f"encountered an unsupported app {device!r}, fall back to 'qandroid'")
+            device = "qandroid"
 fs = client.get_fs(client, path_to_id=LRUCache(65536))
 # NOTE: id 到 pickcode 的映射
 id_to_pickcode: MutableMapping[int, str] = LRUCache(65536)
@@ -227,7 +235,7 @@ async def relogin(exc=None):
                 async_=True, 
             )
             if cookies_path:
-                open(cookies_path, "w").write(client.cookies)
+                save_cookies()
                 cookies_path_mtime = stat(cookies_path).st_mtime_ns
 
 
@@ -382,10 +390,7 @@ async def login_qrcode_result(request: Request, uid: str, app: str = "qandroid")
         data = resp["data"]
         client.cookies = data["cookie"]
         if cookies_path:
-            try:
-                open(cookies_path, "w").write(client.cookies)
-            except:
-                logger.exception("can't save cookies to file: %r", cookies_path)
+            save_cookies()
         device = app
         return data
     raise OSError(resp)
