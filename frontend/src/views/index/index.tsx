@@ -1,10 +1,20 @@
-import { Ancestor, FileInfo, getList } from "/@/api";
+import { Ancestor, FileInfo, getAncestors, getList } from "/@/api";
 import { useSearchParams } from "react-router-dom";
 import FileItem from "./components/FileItem";
 import useSWR from "swr";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { message } from "antd";
 import Spin from "/@/assets/icon/spin.svg?react";
+
+const getData = async (path: string) => {
+  const fileList = await getList({ path });
+  if (fileList.length > 0) {
+    const ancestors = fileList[0].ancestors.slice(0, -1) || [];
+    return { fileList, ancestors };
+  }
+  const ancestors = await getAncestors({ path });
+  return { fileList, ancestors };
+};
 
 const Index = () => {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -12,24 +22,21 @@ const Index = () => {
   const path = searchParams.get("path") || "/";
 
   const {
-    data: fileList,
+    data,
     error: fileListError,
     isLoading: isFileListLoading,
-  } = useSWR<FileInfo[]>(["/list", path], ([_url, path]: any) =>
-    getList({ path })
+  } = useSWR<{ fileList: FileInfo[]; ancestors: Ancestor[] }>(
+    ["/list", path],
+    ([_url, path]: any) => getData(path)
   );
 
-  const [ancestors, setAncestors] = useState<Ancestor[]>([]);
-
-  useEffect(() => {
-    if (fileList) {
-      setAncestors(fileList[0]?.ancestors.slice(0, -1) || []);
-    }
-  }, [fileList]);
+  const { fileList, ancestors } = data || {
+    fileList: [],
+    ancestors: [],
+  };
 
   const navTo = (file: Pick<FileInfo, "path" | "ancestors">) => {
     setSearchParams({ path: file.path });
-    setAncestors(file.ancestors);
   };
 
   const renderFileList = () => {
@@ -92,7 +99,7 @@ const Index = () => {
         >
           首页
         </div>
-        {ancestors.map((item, index) => {
+        {ancestors?.map((item, index) => {
           return (
             <Fragment key={item.id}>
               <span
