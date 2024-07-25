@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@ant-design/icons':
-        specifier: ^5.3.7
+        specifier: ^5.4.0
         version: 5.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       antd:
         specifier: ^5.14.0
@@ -24,13 +24,13 @@ importers:
         specifier: ^1.6.7
         version: 1.6.7
       dayjs:
-        specifier: ^1.11.11
+        specifier: ^1.11.12
         version: 1.11.12
       highlight.js:
         specifier: ^11.9.0
         version: 11.9.0
       hls.js:
-        specifier: ^1.5.11
+        specifier: ^1.5.13
         version: 1.5.13
       lodash-es:
         specifier: ^4.17.21
@@ -97,19 +97,19 @@ importers:
         specifier: ^6.9.14
         version: 6.9.14
       '@types/react':
-        specifier: ^18.2.43
+        specifier: ^18.2.54
         version: 18.2.54
       '@types/react-dom':
-        specifier: ^18.2.17
+        specifier: ^18.2.18
         version: 18.2.18
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
       '@typescript-eslint/eslint-plugin':
-        specifier: ^6.14.0
+        specifier: ^6.21.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)
       '@typescript-eslint/parser':
-        specifier: ^6.14.0
+        specifier: ^6.21.0
         version: 6.21.0(eslint@8.56.0)(typescript@5.3.3)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
@@ -118,7 +118,7 @@ importers:
         specifier: ^10.4.17
         version: 10.4.17(postcss@8.4.34)
       eslint:
-        specifier: ^8.55.0
+        specifier: ^8.56.0
         version: 8.56.0
       eslint-plugin-react-hooks:
         specifier: ^4.6.0
@@ -133,10 +133,10 @@ importers:
         specifier: ^3.4.1
         version: 3.4.1
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
       vite:
-        specifier: ^5.0.8
+        specifier: ^5.0.12
         version: 5.0.12(@types/node@20.11.16)
       vite-plugin-svgr:
         specifier: ^4.2.0
@@ -959,8 +959,8 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001584:
-    resolution: {integrity: sha512-LOz7CCQ9M1G7OjJOF9/mzmqmj3jE/7VOmrfw6Mgs0E8cjOsbRXQJHsPBfmBOXDskXKrHLyyW3n7kpDW/4BsfpQ==}
+  caniuse-lite@1.0.30001643:
+    resolution: {integrity: sha512-ERgWGNleEilSrHM6iUz/zJNSQTP8Mr21wDWpdgvRwcTXGAq6jMtOUPP4dqFPTdKqZ2wKTdtB+uucZ3MRpAUSmg==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -3080,7 +3080,7 @@ snapshots:
   autoprefixer@10.4.17(postcss@8.4.34):
     dependencies:
       browserslist: 4.22.3
-      caniuse-lite: 1.0.30001584
+      caniuse-lite: 1.0.30001643
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -3114,7 +3114,7 @@ snapshots:
 
   browserslist@4.22.3:
     dependencies:
-      caniuse-lite: 1.0.30001584
+      caniuse-lite: 1.0.30001643
       electron-to-chromium: 1.4.657
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.3)
@@ -3135,7 +3135,7 @@ snapshots:
 
   camelize@1.0.1: {}
 
-  caniuse-lite@1.0.30001584: {}
+  caniuse-lite@1.0.30001643: {}
 
   chalk@2.4.2:
     dependencies:
