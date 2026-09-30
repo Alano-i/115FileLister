@@ -48,6 +48,18 @@ export default defineConfig(({ mode }) => {
       target: "es2015",
       cssTarget: "chrome80",
       outDir: "dist",
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return;
+            if (id.includes("antd") || id.includes("@ant-design")) return "antd";
+            if (id.includes("artplayer")) return "artplayer";
+            if (id.includes("hls.js")) return "hls";
+            if (id.includes("axios")) return "http";
+            return "vendor";
+          },
+        },
+      },
     },
     css: {
       postcss: {

@@ -17,7 +17,7 @@ const getData = async (path: string) => {
 };
 
 const Index = () => {
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const path = searchParams.get("path") || "/";
 
@@ -27,7 +27,7 @@ const Index = () => {
     isLoading: isFileListLoading,
   } = useSWR<{ fileList: FileInfo[]; ancestors: Ancestor[] }>(
     ["/list", path],
-    ([_url, path]: any) => getData(path)
+    ([, path]: [string, string]) => getData(path)
   );
 
   const { fileList, ancestors } = data || {

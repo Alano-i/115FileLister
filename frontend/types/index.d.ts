@@ -1,4 +1,4 @@
-type Recordable<T = any> = Record<string, T>;
+type Recordable<T = unknown> = Record<string, T>;
 
 interface LoginFormValues {
   username: string;

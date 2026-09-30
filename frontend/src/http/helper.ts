@@ -27,18 +27,14 @@ export function formatRequestDate(params: Recordable) {
   }
 
   for (const key in params) {
-    const format = params[key]?.format ?? null;
-    if (format && typeof format === "function") {
-      params[key] = params[key].format(DATE_TIME_FORMAT);
+    const value = params[key];
+    if (isObject(value) && typeof value.format === "function") {
+      params[key] = value.format(DATE_TIME_FORMAT);
     }
     if (isString(key)) {
       const value = params[key];
       if (value) {
-        try {
-          params[key] = isString(value) ? value.trim() : value;
-        } catch (error: any) {
-          throw new Error(error);
-        }
+        params[key] = isString(value) ? value.trim() : value;
       }
     }
     if (isObject(params[key])) {

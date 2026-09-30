@@ -23,7 +23,7 @@ export interface FileInfo {
   atime: number;
   thumb: string;
   star: boolean;
-  labels: any[];
+  labels: unknown[];
   score: number;
   hidden: boolean;
   described: boolean;

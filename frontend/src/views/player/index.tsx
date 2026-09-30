@@ -4,17 +4,15 @@ import { useSearchParams } from "react-router-dom";
 import Hls from "hls.js";
 
 const Player = () => {
-  let [searchParams, _] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const pickcode = searchParams.get("pickcode");
   const realType = searchParams.get("real_type");
 
   const artRef = useRef<HTMLDivElement>(null);
-  const artInstanceRef = useRef<Artplayer | null>(null);
-
-  const createArtOption = () => {
-    const art = artInstanceRef.current!;
-    const container = artRef.current!;
+  useEffect(() => {
+    const container = artRef.current;
+    if (!container || !pickcode) return;
 
     const option: Artplayer["Option"] = {
       container: container,
@@ -60,7 +58,7 @@ const Player = () => {
           art: Artplayer
         ) {
           if (Hls.isSupported()) {
-            if (art.hls) art.hls.destroy();
+            if (art.hls instanceof Hls) art.hls.destroy();
             const hls = new Hls();
             hls.loadSource(url);
             hls.attachMedia(video);
@@ -75,33 +73,18 @@ const Player = () => {
       },
     };
 
-    return option;
-  };
-
-  const getInstance = (art: Artplayer) => console.info(art);
-
-  useEffect(() => {
-    if (!artRef.current) {
-      return;
-    }
-
-    const art = new Artplayer(createArtOption());
-    artInstanceRef.current = art;
+    const art = new Artplayer(option);
 
     art.on("error", (error, reconnectTime) => {
       console.info(error, reconnectTime);
     });
-
-    if (getInstance && typeof getInstance === "function") {
-      getInstance(art);
-    }
 
     return () => {
       if (art && art.destroy) {
         art.destroy(false);
       }
     };
-  }, []);
+  }, [pickcode, realType]);
 
   if (!pickcode) {
     return <div>无效的 pickcode</div>;

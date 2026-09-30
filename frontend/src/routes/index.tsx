@@ -2,12 +2,9 @@ import * as React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Layout from "/@/layout";
 import { ConfigProvider, Result, Spin, message } from "antd";
-import { createContext } from "react";
 import { Router } from "./router";
 import zhCN from "antd/lib/locale/zh_CN";
-import { MessageInstance } from "antd/es/message/interface";
-
-export const MessageContext = createContext<MessageInstance | null>(null);
+import { MessageContext } from "/@/hooks/messageContext";
 
 const Config = () => {
   const [messageApi, contextHolder] = message.useMessage();

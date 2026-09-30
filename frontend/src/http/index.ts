@@ -68,7 +68,7 @@ const transform: AxiosTransform = {
 
     const params = config.params || {};
     const data = config.data || false;
-    formatDate && data && !isString(data) && formatRequestDate(data);
+    if (formatDate && data && !isString(data)) formatRequestDate(data);
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
@@ -83,7 +83,7 @@ const transform: AxiosTransform = {
       }
     } else {
       if (!isString(params)) {
-        formatDate && formatRequestDate(params);
+        if (formatDate) formatRequestDate(params);
         if (
           Reflect.has(config, "data") &&
           config.data &&
@@ -122,15 +122,16 @@ const transform: AxiosTransform = {
   /**
    * @description: 响应拦截器处理
    */
-  responseInterceptors: (res: AxiosResponse<any>) => {
+  responseInterceptors: (res: AxiosResponse<unknown>) => {
     return res;
   },
 
   /**
    * @description: 响应错误处理
    */
-  responseInterceptorsCatch: (axiosInstance: AxiosInstance, error: any) => {
-    const { response, config } = error || {};
+  responseInterceptorsCatch: (axiosInstance: AxiosInstance, error: unknown) => {
+    if (!axios.isAxiosError<Result>(error)) return Promise.reject(error);
+    const { response, config } = error;
     const msg: string = response?.data?.message ?? "";
     const errorMessageMode = config?.requestOptions?.errorMessageMode || "none";
 
@@ -138,15 +139,16 @@ const transform: AxiosTransform = {
       return Promise.reject(error);
     }
 
-    checkStatus(error?.response?.status, msg, errorMessageMode);
+    if (response) checkStatus(response.status, msg, errorMessageMode);
 
     // 添加自动重试机制 保险起见 只针对GET请求
     const retryRequest = new AxiosRetry();
-    const { isOpenRetry } = config.requestOptions.retryRequest;
-    config.method?.toUpperCase() === RequestEnum.GET &&
-      isOpenRetry &&
-      // @ts-ignore
-      retryRequest.retry(axiosInstance, error);
+    if (
+      config?.method?.toUpperCase() === RequestEnum.GET &&
+      config.requestOptions?.retryRequest?.isOpenRetry
+    ) {
+      return retryRequest.retry(axiosInstance, error);
+    }
     return Promise.reject(error);
   },
 };

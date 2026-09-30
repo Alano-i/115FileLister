@@ -4,6 +4,7 @@ import type {
   AxiosResponse,
   AxiosError,
   InternalAxiosRequestConfig,
+  RawAxiosRequestHeaders,
 } from "axios";
 import type { RequestOptions, Result, UploadFileParams } from "#/axios";
 import type { CreateAxiosOptions } from "./axiosTransform";
@@ -58,7 +59,7 @@ export class VAxios {
   /**
    * @description: Set general header
    */
-  setHeader(headers: any): void {
+  setHeader(headers: RawAxiosRequestHeaders): void {
     if (!this.axiosInstance) {
       return;
     }
@@ -91,11 +92,11 @@ export class VAxios {
       (config: InternalAxiosRequestConfig) => {
         // If cancel repeat request is turned on, then cancel repeat request is prohibited
         const requestOptions =
-          (config as unknown as any).requestOptions ??
+          config.requestOptions ??
           this.options.requestOptions;
         const ignoreCancelToken = requestOptions?.ignoreCancelToken ?? true;
 
-        !ignoreCancelToken && axiosCanceler.addPending(config);
+        if (!ignoreCancelToken) axiosCanceler.addPending(config);
 
         if (requestInterceptors && isFunction(requestInterceptors)) {
           config = requestInterceptors(config, this.options);
@@ -106,16 +107,13 @@ export class VAxios {
     );
 
     // Request interceptor error capture
-    requestInterceptorsCatch &&
-      isFunction(requestInterceptorsCatch) &&
-      this.axiosInstance.interceptors.request.use(
-        undefined,
-        requestInterceptorsCatch
-      );
+    if (requestInterceptorsCatch && isFunction(requestInterceptorsCatch)) {
+      this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch);
+    }
 
     // Response result interceptor processing
-    this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
-      res && axiosCanceler.removePending(res.config);
+    this.axiosInstance.interceptors.response.use((res: AxiosResponse<unknown>) => {
+      axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res);
       }
@@ -123,17 +121,17 @@ export class VAxios {
     }, undefined);
 
     // Response result interceptor error capture
-    responseInterceptorsCatch &&
-      isFunction(responseInterceptorsCatch) &&
+    if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
       this.axiosInstance.interceptors.response.use(undefined, (error) => {
         return responseInterceptorsCatch(axiosInstance, error);
       });
+    }
   }
 
   /**
    * @description:  File Upload
    */
-  uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
+  uploadFile<T = unknown>(config: AxiosRequestConfig, params: UploadFileParams) {
     const formData = new window.FormData();
     const customFilename = params.name || "file";
 
@@ -153,7 +151,7 @@ export class VAxios {
           return;
         }
 
-        formData.append(key, params.data![key]);
+        formData.append(key, value);
       });
     }
 
@@ -161,10 +159,10 @@ export class VAxios {
       ...config,
       method: "POST",
       data: formData,
+      requestOptions: { ...config.requestOptions, ignoreCancelToken: true },
       headers: {
         "Content-type": ContentTypeEnum.FORM_DATA,
-        // @ts-ignore
-        ignoreCancelToken: true,
+
       },
     });
   }
@@ -188,35 +186,35 @@ export class VAxios {
     };
   }
 
-  get<T = any>(
+  get<T = unknown>(
     config: AxiosRequestConfig,
     options?: RequestOptions
   ): Promise<T> {
     return this.request({ ...config, method: "GET" }, options);
   }
 
-  post<T = any>(
+  post<T = unknown>(
     config: AxiosRequestConfig,
     options?: RequestOptions
   ): Promise<T> {
     return this.request({ ...config, method: "POST" }, options);
   }
 
-  put<T = any>(
+  put<T = unknown>(
     config: AxiosRequestConfig,
     options?: RequestOptions
   ): Promise<T> {
     return this.request({ ...config, method: "PUT" }, options);
   }
 
-  delete<T = any>(
+  delete<T = unknown>(
     config: AxiosRequestConfig,
     options?: RequestOptions
   ): Promise<T> {
     return this.request({ ...config, method: "DELETE" }, options);
   }
 
-  request<T = any>(
+  request<T = unknown>(
     config: AxiosRequestConfig,
     options?: RequestOptions
   ): Promise<T> {
@@ -247,18 +245,18 @@ export class VAxios {
 
     return new Promise((resolve, reject) => {
       this.axiosInstance
-        .request<any, AxiosResponse<Result>>(conf)
+        .request<Result, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
           if (transformResponseHook && isFunction(transformResponseHook)) {
             try {
               const ret = transformResponseHook(res, opt);
-              resolve(ret);
+              resolve(ret as T);
             } catch (err) {
               reject(err || new Error("request error!"));
             }
             return;
           }
-          resolve(res as unknown as Promise<T>);
+          resolve(res as unknown as T);
         })
         .catch((e: Error | AxiosError) => {
           if (requestCatchHook && isFunction(requestCatchHook)) {

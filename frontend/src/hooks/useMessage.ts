@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { MessageContext } from "/@/routes";
+import { MessageContext } from "./messageContext";
 
 export const useMessage = () => {
   const messageApi = useContext(MessageContext);

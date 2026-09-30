@@ -1,19 +1,19 @@
 # 阶段 1: 构建前端静态文件
 # 使用 Node.js 的官方基础镜像
-FROM node:18.12 AS build-stage
+FROM node:24.21.0 AS build-stage
 
 # 设置前端工作目录
 WORKDIR /app/frontend
 
 # 安装pnpm
-RUN npm install --global pnpm
+RUN npm install --global pnpm@10.34.6
 
 # 复制前端相关的文件
 COPY ./frontend/package*.json ./
 COPY ./frontend/pnpm-lock.yaml ./
 
 # 安装前端依赖
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # 复制前端代码
 COPY ./frontend .
